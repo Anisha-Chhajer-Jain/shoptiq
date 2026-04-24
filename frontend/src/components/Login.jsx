@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import './Login.css';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
   const [role, setRole] = useState('buyer');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (onLogin) onLogin();
+  };
 
   return (
     <div className="login-container">
@@ -62,7 +67,7 @@ const Login = () => {
             </button>
           </div>
 
-          <form onSubmit={(e) => e.preventDefault()}>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="form-label">Email Address</label>
               <div className="input-wrapper">
