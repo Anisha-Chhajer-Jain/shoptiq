@@ -1,0 +1,476 @@
+/* ── Inventory Layout ── */
+.inventory-container {
+  display: flex;
+  height: calc(100vh - 58px);
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.inventory-container *, .inventory-container *::before, .inventory-container *::after {
+  box-sizing: border-box;
+}
+
+/* ── Left Panel ── */
+.inv-panel {
+  width: 320px;
+  flex-shrink: 0;
+  background: white;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.inv-panel-header {
+  padding: 1.25rem 1.25rem 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.inv-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.inv-subtitle {
+  font-size: 0.75rem;
+  color: #718096;
+  margin-top: 3px;
+}
+
+/* Search */
+.inv-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.875rem 1.25rem 0;
+  padding: 0.5rem 0.75rem;
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  color: #a0aec0;
+}
+
+.inv-search-bar input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.8rem;
+  color: #1a202c;
+  font-family: inherit;
+}
+
+.inv-search-bar input::placeholder { color: #a0aec0; }
+
+/* Controls */
+.inv-controls {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+}
+
+.inv-filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: #1a202c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  flex: 1;
+  justify-content: center;
+}
+
+.inv-sort-btn {
+  padding: 0.5rem 0.75rem;
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4a5568;
+  cursor: pointer;
+  font-family: inherit;
+  flex: 1;
+  white-space: nowrap;
+}
+
+.inv-sort-btn:hover { background: #edf2f7; }
+
+/* Store List */
+.inv-store-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 1.25rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.inv-store-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.inv-store-card:hover { border-color: #cbd5e0; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+.inv-store-card.selected {
+  border-color: #3182ce;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.15);
+}
+
+.inv-store-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.inv-store-name {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: #1a202c;
+  flex: 1;
+}
+
+/* Status Badges */
+.inv-status-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.inv-status-badge.in-stock { background: #c6f6d5; color: #276749; }
+.inv-status-badge.low-stock { background: #feebc8; color: #c05621; }
+.inv-status-badge.out-stock { background: #fed7d7; color: #c53030; }
+
+.inv-store-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: #718096;
+  margin-bottom: 0.4rem;
+}
+
+.inv-restocking {
+  font-size: 0.72rem;
+  color: #805ad5;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.inv-units {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: #4a5568;
+  margin-bottom: 0.75rem;
+}
+
+/* Store Actions */
+.inv-store-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.inv-reserve-btn {
+  flex: 1;
+  padding: 0.5rem;
+  background: #1a202c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.15s;
+}
+
+.inv-reserve-btn:hover:not(.disabled) { background: #2d3748; }
+
+.inv-reserve-btn.disabled {
+  background: #e2e8f0;
+  color: #a0aec0;
+  cursor: not-allowed;
+}
+
+.inv-navigate-btn {
+  width: 34px;
+  height: 34px;
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4a5568;
+  flex-shrink: 0;
+  transition: background-color 0.15s;
+}
+
+.inv-navigate-btn:hover { background: #edf2f7; }
+
+/* ── Map Area ── */
+.inv-map-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #eef0f5;
+}
+
+.inv-map {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #e8eef4;
+}
+
+.map-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(200, 210, 230, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 210, 230, 0.4) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.map-roads {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.map-city-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: 800;
+  color: rgba(100, 120, 160, 0.18);
+  letter-spacing: 2px;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Map Pins */
+.map-pin {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pin-label {
+  width: 36px;
+  height: 36px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: transform 0.2s;
+}
+
+.pin-label span {
+  transform: rotate(45deg);
+  display: block;
+}
+
+.map-pin .pin-label {
+  transform: rotate(-45deg);
+}
+
+.map-pin:hover .pin-label, .map-pin.active .pin-label {
+  transform: rotate(-45deg) scale(1.2);
+}
+
+/* Pin colors by status */
+.map-pin.in-stock .pin-label  { background: #38a169; }
+.map-pin.low-stock .pin-label { background: #dd6b20; }
+.map-pin.out-stock .pin-label { background: #e53e3e; }
+
+/* Active ring */
+.map-pin.active::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-45deg);
+  width: 44px;
+  height: 44px;
+  border-radius: 50% 50% 50% 0;
+  border: 3px solid rgba(49, 130, 206, 0.5);
+  pointer-events: none;
+}
+
+/* Tooltip */
+.pin-tooltip {
+  position: absolute;
+  bottom: 42px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  color: #1a202c;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border: 1px solid #e2e8f0;
+}
+
+.pin-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: white;
+}
+
+/* Legend */
+.inv-legend {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: white;
+  border-radius: 10px;
+  padding: 0.875rem 1rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border: 1px solid #e2e8f0;
+  z-index: 20;
+}
+
+.inv-legend-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 0.625rem;
+}
+
+.inv-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #4a5568;
+  margin-bottom: 0.4rem;
+}
+
+.inv-legend-item:last-child { margin-bottom: 0; }
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-dot.green  { background: #38a169; }
+.legend-dot.orange { background: #dd6b20; }
+.legend-dot.red    { background: #e53e3e; }
+
+/* Map Controls */
+.map-controls {
+  position: absolute;
+  bottom: 2rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 20;
+}
+
+.map-ctrl-btn {
+  width: 36px;
+  height: 36px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  color: #4a5568;
+  transition: background-color 0.15s;
+}
+
+.map-ctrl-btn:hover { background: #f7fafc; }
+
+.map-locate-btn { font-size: 0.9rem; }
+
+.map-attribution {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  color: #a0aec0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .inventory-container {
+    flex-direction: column;
+    height: auto;
+    overflow: auto;
+  }
+
+  .inv-panel {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .inv-store-list {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .inv-map-area {
+    height: 320px;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .inv-map-area { height: 260px; }
+  .inv-store-card { padding: 0.75rem; }
+  .inv-panel-header { padding: 1rem 1rem 0.75rem; }
+  .inv-search-bar { margin: 0.75rem 1rem 0; }
+  .inv-controls { padding: 0.5rem 1rem; }
+  .inv-store-list { padding: 0.5rem 1rem 1rem; }
+}

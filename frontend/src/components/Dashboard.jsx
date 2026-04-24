@@ -1,17 +1,29 @@
 import React, { useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import Inventory from './Inventory';
 import './Dashboard.css';
 
 const Dashboard = ({ onLogout }) => {
   const [activeNav, setActiveNav] = useState('Dashboard');
+  const [activePage, setActivePage] = useState('dashboard');
 
   const navItems = ['Dashboard', 'Style Profile', 'Orders', 'Store Management', 'Analytics', 'Settings'];
+
+  const handleNavLink = (link) => {
+    if (link === 'Inventory') setActivePage('inventory');
+    else setActivePage('dashboard');
+  };
+
+  const handleSidebarNav = (item) => {
+    setActiveNav(item);
+    setActivePage('dashboard');
+  };
 
   return (
     <div className="dashboard-container">
       {/* Navbar Component */}
-      <Navbar onLogout={onLogout} />
+      <Navbar onLogout={onLogout} onNavLink={handleNavLink} activePage={activePage} />
 
       <div className="dashboard-layout">
         {/* Sidebar */}
@@ -25,7 +37,7 @@ const Dashboard = ({ onLogout }) => {
               <button
                 key={item}
                 className={`sidebar-nav-item ${activeNav === item ? 'active' : ''}`}
-                onClick={() => setActiveNav(item)}
+                onClick={() => handleSidebarNav(item)}
               >
                 <span className="nav-dot"></span>
                 {item}
@@ -36,19 +48,14 @@ const Dashboard = ({ onLogout }) => {
         </aside>
 
         {/* Main Content */}
-        <main className="dashboard-main">
+        <main className="dashboard-main" style={activePage === 'inventory' ? { padding: 0 } : {}}>
+          {activePage === 'inventory' ? (
+            <Inventory />
+          ) : (
+          <>
           <div className="welcome-header">
-            <div className="welcome-header-left">
-              <h1 className="welcome-title">Welcome back, Alexander</h1>
-              <p className="welcome-sub">Here is what is happening with your commerce ecosystem today.</p>
-            </div>
-            <button className="add-product-btn" onClick={() => alert('Add Product / Item')}>  
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              Add Product
-            </button>
+            <h1 className="welcome-title">Welcome back, Alexander</h1>
+            <p className="welcome-sub">Here is what is happening with your commerce ecosystem today.</p>
           </div>
 
           <div className="content-grid">
@@ -91,6 +98,7 @@ const Dashboard = ({ onLogout }) => {
                   <div className="section-title">Recent Orders</div>
                   <button className="filter-btn">⊞ Filter</button>
                 </div>
+                <div className="orders-table-wrapper">
                 <table className="orders-table">
                   <thead>
                     <tr>
@@ -121,6 +129,7 @@ const Dashboard = ({ onLogout }) => {
                     </tr>
                   </tbody>
                 </table>
+                </div>
               </section>
 
               {/* Pending Reviews */}
@@ -306,6 +315,8 @@ const Dashboard = ({ onLogout }) => {
               </section>
             </div>
           </div>
+          </>
+          )}
         </main>
       </div>
 

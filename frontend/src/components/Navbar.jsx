@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './Navbar.css';
 
-const Navbar = ({ onLogout }) => {
-  const [activeLink, setActiveLink] = useState('Shop');
+const Navbar = ({ onLogout, onNavLink, activePage }) => {
+  const [activeLink, setActiveLink] = useState('Deals');
   const [aiDropdown, setAiDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navLinks = ['Shop', 'Deals', 'Inventory', 'Community', 'Group Buy'];
+  const navLinks = ['Deals', 'Inventory', 'Community', 'Group Buy'];
 
   return (
     <>
@@ -25,8 +25,9 @@ const Navbar = ({ onLogout }) => {
         {/* Desktop Links */}
         <div className="navbar-links">
           {navLinks.map((link) => (
-            <a key={link} href="#" className={`navbar-link ${activeLink === link ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); setActiveLink(link); }}>
+            <a key={link} href="#"
+              className={`navbar-link ${(activePage === 'inventory' && link === 'Inventory') || (activePage !== 'inventory' && activeLink === link) ? 'active' : ''}`}
+              onClick={(e) => { e.preventDefault(); setActiveLink(link); if (onNavLink) onNavLink(link); }}>
               {link}
             </a>
           ))}
