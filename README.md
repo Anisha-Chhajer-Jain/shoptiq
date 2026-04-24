@@ -169,18 +169,23 @@ npm run dev
 
 # Frontend
 npm run dev
-🌱 Future Enhancements
-AI-based size recommendation
-AR try-on integration
-Real-time store sync
-Advanced pricing engine
-Mobile app
-🎯 Unique Value
-Reduces product returns
-Improves customer trust
-Enhances transparency
-Bridges online & offline shopping
-🏁 One-Line Pitch
+
+---
+
+##🌱 Future Enhancements
+- AI-based size recommendation
+- AR try-on integration
+- Real-time store sync
+- Advanced pricing engine
+- Mobile app
+
+## 🎯 Unique Value
+- Reduces product returns
+- Improves customer trust
+- Enhances transparency
+- Bridges online & offline shopping
+
+## 🏁 One-Line Pitch
 
 Shoptiq ensures what users see, pay, and expect matches what they actually get.
 
