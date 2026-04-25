@@ -1,18 +1,105 @@
-:root {
-  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap');
 
-  color-scheme: light dark;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+:root {
+  /* ── Colors (High Contrast) ── */
+  --primary: #0f172a;       /* Slate 900 */
+  --primary-light: #1e293b; /* Slate 800 */
+  --accent: #4f46e5;        /* Indigo 600 - Better contrast than 500 */
+  --accent-hover: #4338ca;  /* Indigo 700 */
+  --accent-light: #eef2ff;  /* Indigo 50 */
+  
+  --success: #059669;       /* Emerald 600 - Better contrast than 500 */
+  --success-light: #ecfdf5; /* Emerald 50 */
+  
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  
+  --text-main: #0f172a;     /* Slate 900 */
+  --text-secondary: #334155; /* Slate 700 - High contrast for subtext */
+  --text-muted: #475569;    /* Slate 600 - WCAG AA compliant (4.5:1+) */
+  --text-light: #64748b;     /* Slate 500 - For decorative text only */
+  
+  --border: #e2e8f0;        /* Slate 200 - More visible border */
+  --border-hover: #cbd5e1;  /* Slate 300 */
+  
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  /* ── Transitions ── */
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  min-width: 320px;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-main);
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--transition);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition);
+}
+
+/* ── Layout ── */
+.app-container {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
+}
+
+.app-body-layout {
+  display: flex;
+  flex: 1;
+}
+
+.app-body-layout.with-sidebar {
+  background: var(--bg-main);
+}
+
+.main-content-view {
+  flex: 1;
+  min-width: 0; /* Prevent flex overflow */
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
