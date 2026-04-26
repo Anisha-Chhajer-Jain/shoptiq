@@ -66,7 +66,7 @@ const ProductDetail = ({ onAddToCart, onNegotiate }) => {
           <h1 className="pd-title">Structured Wool Overcoat</h1>
           <div className="pd-pricing-row">
               <span className="p-price-val">₹4,500</span>
-            <span className="pd-old-price">$1,200.00</span>
+            <span className="pd-old-price">₹6,500</span>
           </div>
 
           {/* AI Size Finder */}
@@ -109,15 +109,15 @@ const ProductDetail = ({ onAddToCart, onNegotiate }) => {
             <div className="avail-list">
               <div className="avail-item">
                 <div className="avail-info">
-                  <strong>Flagship Store - SoHo</strong>
-                  <p>0.4 miles away</p>
+                  <strong>Bandra Flagship</strong>
+                  <p>0.6 km away</p>
                 </div>
                 <span className="status-pill green">● In-Stock</span>
               </div>
               <div className="avail-item">
                 <div className="avail-info">
-                  <strong>Brooklyn Yards</strong>
-                  <p>2.8 miles away</p>
+                  <strong>Andheri Hub</strong>
+                  <p>2.4 km away</p>
                 </div>
                 <span className="status-pill red">● Out of Stock</span>
               </div>

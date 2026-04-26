@@ -7,32 +7,32 @@ const Inventory = () => {
 
   const stores = [
     {
-      name: 'Market Street Flagship',
-      dist: '0.4 miles away • 4 min drive',
+      name: 'Bandra West Flagship',
+      dist: '0.6 km away • 5 min drive',
       units: '42 units available',
       status: 'In Stock',
       statusColor: 'green',
       location: { top: '25%', left: '55%' }
     },
     {
-      name: 'Mission District Boutique',
-      dist: '1.2 miles away • 12 min drive',
+      name: 'Andheri East Hub',
+      dist: '2.4 km away • 15 min drive',
       units: '3 units remaining',
       status: 'Low Stock',
       statusColor: 'yellow',
       location: { top: '58%', left: '65%' }
     },
     {
-      name: 'SOMA Distribution Center',
-      dist: '2.1 miles away • 18 min drive',
+      name: 'Kurla Distribution Center',
+      dist: '4.2 km away • 25 min drive',
       units: 'Restocking in 2 days',
       status: 'Out of Stock',
       statusColor: 'red',
       location: { top: '43%', left: '82%' }
     },
     {
-      name: 'Hayes Valley Outlet',
-      dist: '1.8 miles away • 15 min drive',
+      name: 'Colaba Waterfront Outlet',
+      dist: '1.8 km away • 12 min drive',
       units: '18 units available',
       status: 'In Stock',
       statusColor: 'green',
@@ -148,7 +148,7 @@ const Inventory = () => {
           </div>
 
           {/* City Label */}
-          <div className="city-label">San Francisco</div>
+          <div className="city-label">Mumbai Metro</div>
         </div>
       </main>
     </div>
