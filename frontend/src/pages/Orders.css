@@ -1,0 +1,151 @@
+.orders-root {
+  background-color: var(--bg-main);
+  min-height: calc(100vh - 96px);
+  padding: 3rem 5%;
+}
+
+.orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3rem;
+}
+
+.orders-header h1 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--primary);
+  letter-spacing: -0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.orders-header p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
+.btn-export {
+  padding: 1rem 1.5rem;
+  background: white;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--primary);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-export:hover {
+  border-color: var(--primary);
+  background: var(--bg-main);
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.order-card {
+  background: white;
+  border-radius: 24px;
+  padding: 2rem;
+  border: 1.5px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: var(--transition);
+}
+
+.order-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.order-main-info {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.order-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 16px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid var(--border);
+}
+
+.order-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.order-id {
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+
+.order-date {
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.order-stats {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.order-stats strong {
+  color: var(--primary);
+  font-weight: 900;
+}
+
+.order-status-area {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.status-pill {
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+
+.status-pill.delivered { background: #ecfdf5; color: #059669; }
+.status-pill.processing { background: #fffbeb; color: #b45309; }
+.status-pill.shipped { background: #eff6ff; color: #2563eb; }
+
+.btn-details {
+  padding: 0.75rem 1.25rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-details:hover {
+  background: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .order-card { flex-direction: column; align-items: flex-start; gap: 2rem; }
+  .order-status-area { width: 100%; justify-content: space-between; }
+}

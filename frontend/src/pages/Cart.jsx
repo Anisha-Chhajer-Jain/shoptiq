@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Cart.css';
 
-const Cart = ({ onCheckout }) => {
+const Cart = ({ onCheckout, onNavigate }) => {
   const [items, setItems] = useState([
     { id: 1, name: 'Swift-Core Enterprise Hubs', sku: 'SCH-902-X', price: 8500, original: 10500, qty: 3, discount: 2000, img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=200' },
     { id: 2, name: 'Quantum Series Workstation', price: 42000, qty: 1, img: 'https://images.unsplash.com/photo-1587831990711-23ca6441447b?auto=format&fit=crop&q=80&w=200', hasGroupBuy: true },
@@ -72,7 +72,7 @@ const Cart = ({ onCheckout }) => {
                           <p>Join 12 others to drop price to ₹38,500.00</p>
                         </div>
                       </div>
-                      <button className="join-gb-btn">Join Group Buy</button>
+                      <button className="join-gb-btn" onClick={() => onNavigate('groupbuy')}>Join Group Buy</button>
                     </div>
                   )}
 
@@ -97,7 +97,7 @@ const Cart = ({ onCheckout }) => {
                <strong>Need volume pricing?</strong>
                <p>Start a dynamic negotiation for orders over ₹50k.</p>
             </div>
-            <button className="btn-negotiate">New Negotiation</button>
+            <button className="btn-negotiate" onClick={() => onNavigate('negotiation-hub')}>New Negotiation</button>
           </div>
         </div>
 
@@ -146,7 +146,7 @@ const Cart = ({ onCheckout }) => {
           <div className="enterprise-quote-card">
              <strong>Enterprise Quote?</strong>
              <p>Orders over $25k qualify for custom negotiation with a regional agent.</p>
-             <button className="btn-talk-sales">Talk to Sales</button>
+             <button className="btn-talk-sales" onClick={() => onNavigate('negotiation-hub')}>Talk to Sales</button>
           </div>
         </aside>
       </div>

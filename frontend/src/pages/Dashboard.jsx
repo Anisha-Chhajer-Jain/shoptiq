@@ -1,26 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { PRODUCTS, NEGOTIATIONS, GROUP_BUYS } from '../data/products';
 import './Dashboard.css';
 
-const Dashboard = ({ onNavigate }) => {
-  const negotiations = [
-    { name: 'Onyx Mechanical Watch', asking: '₹4,500', bid: '₹3,800', status: 'Counter-Offer', type: 'offer' },
-    { name: 'Eames Lounge Chair Rep.', asking: '₹12,999', bid: '₹10,500', status: 'Waiting for Seller', type: 'waiting' }
-  ];
-
-  const groupBuys = [
-    { name: 'Studio Audio Pack', progress: 85, backers: 142, needed: 8, discount: '35% OFF', img: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&q=80&w=400' },
-    { name: 'Smart Garden Kit v2', progress: 62, backers: 94, needed: 26, discount: '20% OFF', img: 'https://images.unsplash.com/photo-1585336139118-1079a79c5155?auto=format&fit=crop&q=80&w=400' }
-  ];
-
-  const precisionCollection = [
-    { id: 'p1', name: 'Structured Wool Overcoat', brand: 'HERITAGE COLLECTION', price: '₹4,500', oldPrice: '₹6,500', status: 'IN STOCK', img: 'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?auto=format&fit=crop&q=80&w=400' },
-    { id: 'p2', name: 'Raw Edge Shorts', brand: 'STUDIO DENIM', price: '₹1,200', oldPrice: '₹1,800', status: 'LOW STOCK', img: 'https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&q=80&w=400' },
-    { id: 'p3', name: 'Nordic Chrono 40', brand: 'ACCESSORIES', price: '₹2,400', oldPrice: '₹3,200', status: 'IN STOCK', img: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=400' },
-    { id: 'p4', name: 'Satchel 1.0', brand: 'LUXURY LEATHER', price: '₹3,500', oldPrice: '₹4,800', status: 'IN STOCK', img: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&q=80&w=400' }
-  ];
+const Dashboard = () => {
+  const navigate = useNavigate();
 
   return (
     <div className="dashboard-root">
+
+
       {/* ── Hero Banner ── */}
       <section className="hero-banner-pro">
         <div className="hero-content-pro">
@@ -31,14 +20,14 @@ const Dashboard = ({ onNavigate }) => {
           <h1 className="hero-h1">Shopping, Exactly How You Expect It.</h1>
           <p className="hero-p">Experience zero-friction commerce with verified live stock, dynamic smart pricing, and high-fidelity AR visualization.</p>
           <div className="hero-btns">
-            <button className="btn-solid" onClick={() => onNavigate('groupbuy')}>Explore Group Pools</button>
-            <button className="btn-blur" onClick={() => onNavigate('aistyling')}>Style Profile</button>
+            <button className="btn-solid" onClick={() => navigate('/groupbuy')}>Explore Group Pools</button>
+            <button className="btn-blur" onClick={() => navigate('/aistyling')}>Style Profile</button>
           </div>
         </div>
-        <div className="metrics-summary-pro">
-          <div className="metric-pill">Active Savings: <strong>₹8,450</strong></div>
-          <div className="metric-pill">Negotiations: <strong>4 Active</strong></div>
-          <div className="m-trend">+12.5% THIS WEEK</div>
+        <div className="hero-metric-pro">
+           <div className="m-label">ACTIVE SAVINGS</div>
+           <div className="m-value">₹8,450</div>
+           <div className="m-trend">+12.5% THIS WEEK</div>
         </div>
       </section>
 
@@ -48,18 +37,18 @@ const Dashboard = ({ onNavigate }) => {
         <section className="dashboard-card-section">
           <div className="card-section-header">
             <h3>Negotiation Hub</h3>
-            <button className="card-link">View All</button>
+            <button className="card-link" onClick={() => navigate('/negotiation')}>View All</button>
           </div>
           <div className="neg-stack-pro">
-            {negotiations.map((neg, idx) => (
-              <div key={idx} className="neg-item-pro">
+            {NEGOTIATIONS.map((neg) => (
+              <div key={neg.id} className="neg-item-pro">
                 <div className="neg-info">
                   <strong>{neg.name}</strong>
-                  <p>Asking: {neg.asking} • Bid: <span className="blue">{neg.bid}</span></p>
+                  <p>Asking: ₹{neg.asking.toLocaleString()} • Bid: <span className="blue">₹{neg.bid.toLocaleString()}</span></p>
                 </div>
                 <div className="neg-status-row">
-                  <span className={`status-tag ${neg.type}`}>{neg.status}</span>
-                  <button className="btn-manage-pro">Manage</button>
+                   <span className={`status-tag ${neg.type}`}>{neg.status}</span>
+                   <button className="btn-manage-pro" onClick={() => navigate('/negotiation')}>Manage</button>
                 </div>
               </div>
             ))}
@@ -70,11 +59,11 @@ const Dashboard = ({ onNavigate }) => {
         <section className="dashboard-card-section">
           <div className="card-section-header">
             <h3>Featured Group Buys</h3>
-            <button className="card-link" onClick={() => onNavigate('groupbuy')}>Browse Pools</button>
+            <button className="card-link" onClick={() => navigate('/groupbuy')}>Browse Pools</button>
           </div>
           <div className="gb-stack-pro">
-            {groupBuys.map((gb, idx) => (
-              <div key={idx} className="gb-item-pro" onClick={() => onNavigate('groupbuy')}>
+            {GROUP_BUYS.map((gb) => (
+              <div key={gb.id} className="gb-item-pro" onClick={() => navigate('/groupbuy')}>
                 <div className="gb-img-mini" style={{ backgroundImage: `url(${gb.img})` }}>
                   <div className="gb-discount-pro">{gb.discount}</div>
                 </div>
@@ -105,12 +94,15 @@ const Dashboard = ({ onNavigate }) => {
         </div>
 
         <div className="precision-grid-pro">
-          {precisionCollection.map((product) => (
-            <div key={product.id} className="p-card-pro" onClick={() => onNavigate('product-detail')}>
+          {PRODUCTS.map((product) => (
+            <div key={product.id} className="p-card-pro" onClick={() => navigate(`/product/${product.id}`)}>
               <div className="p-img-pro">
                 <img src={product.img} alt={product.name} />
                 <span className={`p-stock-pro ${product.status.toLowerCase().replace(' ', '-')}`}>{product.status}</span>
-                <button className="p-add-pro" onClick={(e) => { e.stopPropagation(); onNavigate('cart'); }}>
+                <button className="p-add-pro" onClick={(e) => { 
+                   e.stopPropagation(); 
+                   navigate('/cart');
+                }}>
                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
               </div>
@@ -118,8 +110,11 @@ const Dashboard = ({ onNavigate }) => {
                 <span className="p-brand-pro">{product.brand}</span>
                 <h4 className="p-name-pro">{product.name}</h4>
                 <div className="p-footer-pro">
-                  <span className="cur-price">{product.price}</span>
-                  <span className="old-price">{product.oldPrice}</span>
+                   <div className="p-pricing-pro">
+                      <span className="p-price-pro">₹{product.price.toLocaleString()}</span>
+                      <span className="p-old-price-pro" style={{ textDecoration: 'line-through', color: '#94a3b8', fontSize: '0.8rem', marginLeft: '8px' }}>₹{product.oldPrice.toLocaleString()}</span>
+                   </div>
+                   <span className="p-offer-pro">{product.discount} SAVINGS</span>
                 </div>
               </div>
             </div>
