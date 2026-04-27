@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './ProductDetail.css';
 
-const ProductDetail = ({ onAddToCart, onNegotiate }) => {
+const ProductDetail = ({ onAddToCart, onNegotiate, onNavigate }) => {
   const [height, setHeight] = useState(185);
   const [weight, setWeight] = useState(82);
   const [activeImg, setActiveImg] = useState(0);
@@ -18,6 +18,10 @@ const ProductDetail = ({ onAddToCart, onNegotiate }) => {
     return 'Small (Tailored Fit)';
   };
 
+  const handleAR = () => {
+    onNavigate('aistyling');
+  };
+
   return (
     <div className="product-detail-root">
       <div className="pd-container">
@@ -25,7 +29,7 @@ const ProductDetail = ({ onAddToCart, onNegotiate }) => {
         <div className="pd-gallery-area">
           <div className="main-image-wrap">
             <img src={images[activeImg]} alt="Structured Wool Overcoat" />
-            <button className="ar-tryon-badge">
+            <button className="ar-tryon-badge" onClick={handleAR}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
               AR TRY-ON
             </button>
@@ -104,7 +108,7 @@ const ProductDetail = ({ onAddToCart, onNegotiate }) => {
           <div className="availability-section">
             <div className="avail-header">
               <h3>Nearby Availability</h3>
-              <button className="text-btn">Change Location</button>
+              <button className="text-btn" onClick={() => onNavigate('inventory')}>Change Location</button>
             </div>
             <div className="avail-list">
               <div className="avail-item">
@@ -130,7 +134,7 @@ const ProductDetail = ({ onAddToCart, onNegotiate }) => {
       <section className="community-gallery-pd">
         <div className="cg-header">
           <h2>Community Gallery</h2>
-          <button className="upload-look-btn">
+          <button className="upload-look-btn" onClick={() => onNavigate('community')}>
             Upload Your Look
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
           </button>
@@ -142,7 +146,7 @@ const ProductDetail = ({ onAddToCart, onNegotiate }) => {
           <div className="cg-item"><img src="https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?auto=format&fit=crop&q=80&w=400" alt="Look 4" /></div>
           <div className="cg-item more">
              <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80&w=400" alt="More" />
-             <div className="more-overlay">+24 More</div>
+             <div className="more-overlay" onClick={() => onNavigate('community')}>+24 More</div>
           </div>
         </div>
       </section>

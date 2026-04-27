@@ -1,41 +1,46 @@
 import React, { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './Navbar.css';
 
-const Navbar = ({ onLogout, onNavLink, activePage, onSearch, cartCount = 0 }) => {
+const Navbar = ({ onLogout, cartCount = 0 }) => {
   const [query, setQuery] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   const navLinks = [
-    { name: 'Shop', id: 'dashboard' },
-    { name: 'Inventory', id: 'inventory' },
-    { name: 'AI Styling', id: 'aistyling' },
-    { name: 'Group Buy', id: 'groupbuy' },
-    { name: 'Community', id: 'community' }
+    { name: 'Shop', path: '/dashboard' },
+    { name: 'Inventory', path: '/inventory' },
+    { name: 'AI Styling', path: '/aistyling' },
+    { name: 'Group Buy', path: '/groupbuy' },
+    { name: 'Community', path: '/community' },
+    { name: 'Orders', path: '/orders' }
   ];
 
   const handleSearchSubmit = (e) => {
     if (e.key === 'Enter' && query.trim()) {
-      onSearch(query);
+      navigate(`/search?q=${encodeURIComponent(query)}`);
     }
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <div className="navbar-brand" onClick={() => onNavLink('dashboard')} style={{cursor: 'pointer'}}>
+        <Link to="/dashboard" className="navbar-brand">
           Shoptiq
-        </div>
+        </Link>
 
         {/* Desktop Links */}
         <div className="navbar-links">
           {navLinks.map((link) => (
-            <a 
-              key={link.id} 
-              href="#" 
-              className={`navbar-link ${activePage === link.id ? 'active' : ''}`}
-              onClick={(e) => { e.preventDefault(); onNavLink(link.id); }}
+            <Link 
+              key={link.path} 
+              to={link.path} 
+              className={`navbar-link ${location.pathname === link.path ? 'active' : ''}`}
             >
               {link.name}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -53,6 +58,13 @@ const Navbar = ({ onLogout, onNavLink, activePage, onSearch, cartCount = 0 }) =>
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleSearchSubmit}
             />
+            <button 
+              className="visual-search-trigger" 
+              title="AI Visual Search"
+              onClick={() => alert("Initializing AI Computer Vision... Please upload or drag an image to find matching inventory.")}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+            </button>
           </div>
         </div>
 
@@ -64,14 +76,14 @@ const Navbar = ({ onLogout, onNavLink, activePage, onSearch, cartCount = 0 }) =>
             </svg>
           </button>
           
-          <button className="icon-btn-action" title="Shopping Cart" onClick={() => onNavLink('cart')}>
+          <Link to="/cart" className="icon-btn-action" title="Shopping Cart">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="9" cy="21" r="1"></circle>
               <circle cx="20" cy="21" r="1"></circle>
               <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
             </svg>
             {cartCount > 0 && <span className="cart-count-badge">{cartCount}</span>}
-          </button>
+          </Link>
           
           <div className="user-profile-trigger" onClick={onLogout} title="Logout">
             <div className="avatar-placeholder-pro">
@@ -81,7 +93,7 @@ const Navbar = ({ onLogout, onNavLink, activePage, onSearch, cartCount = 0 }) =>
               </svg>
             </div>
             <div className="user-details-mini">
-              <span className="user-name-nav">Admin</span>
+              <span className="user-name-nav">{user?.name || 'Admin'}</span>
               <span className="user-role-nav">Pro</span>
             </div>
           </div>
