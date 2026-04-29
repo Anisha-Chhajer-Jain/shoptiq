@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SEO } from '../components/SEO';
 import './LandingPage.css';
 
 const LandingPage = () => {
@@ -7,6 +8,10 @@ const LandingPage = () => {
 
    return (
       <div className="landing-root">
+         <SEO 
+            title="Welcome to OmniCommerce" 
+            description="Experience the future of shopping with our smart omnicommerce platform. AI-driven styling, real-time negotiation, and bulk buying made simple."
+         />
 
          {/* ── Navbar ── */}
          <nav className="landing-nav">

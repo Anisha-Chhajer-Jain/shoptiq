@@ -1,4 +1,5 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 import './Orders.css';
 
 const ORDERS_DATA = [
@@ -15,7 +16,7 @@ const Orders = ({ onNavigate }) => {
            <h1>Order History</h1>
            <p>Track your enterprise procurement and settlement status.</p>
         </div>
-        <button className="btn-export">Export PDF Report</button>
+        <button className="btn-export" onClick={() => toast.success('PDF Report is being generated and will download shortly.')}>Export PDF Report</button>
       </header>
 
       <div className="orders-list">
@@ -36,7 +37,7 @@ const Orders = ({ onNavigate }) => {
                <span className={`status-pill ${order.status.toLowerCase()}`}>
                   ● {order.status}
                </span>
-               <button className="btn-details" onClick={() => onNavigate('dashboard')}>View Details</button>
+               <button className="btn-details" onClick={() => toast.info(`Viewing details for order ${order.id}`)}>View Details</button>
             </div>
           </div>
         ))}

@@ -1,0 +1,113 @@
+.add-product-root {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.add-product-header {
+  margin-bottom: 2rem;
+}
+
+.add-product-header h1 {
+  font-size: 2rem;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.add-product-header p {
+  color: var(--text-muted);
+}
+
+.add-product-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.add-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-row.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .form-row.split {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-select, textarea.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  transition: all 0.2s ease;
+}
+
+.form-select:focus, textarea.form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+}
+
+:root.dark .form-select, :root.dark textarea.form-input {
+  border-color: var(--border);
+}
+
+:root.dark .form-select:focus, :root.dark textarea.form-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.btn-cancel {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.btn-cancel:hover {
+  background: var(--bg-main);
+}
+
+.btn-submit {
+  padding: 0.75rem 2rem;
+  background: var(--primary);
+  color: var(--bg-main);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background: var(--primary-light);
+  transform: translateY(-1px);
+}
+
+.btn-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}

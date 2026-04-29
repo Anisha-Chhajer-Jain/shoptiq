@@ -134,8 +134,26 @@
   .hero-metric-pro { width: 100%; text-align: center; }
   .dashboard-main-grid { grid-template-columns: 1fr; }
 }
-@media (max-width: 640px) {
-  .hero-banner-pro { padding: 2.5rem 1.5rem; }
-  .hero-h1 { font-size: 2.25rem; }
+
+@media (max-width: 768px) {
+  .dashboard-root { padding: 1.5rem; }
+  .hero-banner-pro { padding: 2rem; }
+  .hero-h1 { font-size: 2.5rem; }
+  .hero-btns { flex-direction: column; }
+  .btn-solid, .btn-blur { width: 100%; }
+  
+  .dashboard-card-section { padding: 1.5rem; border-radius: 20px; }
+  .neg-item-pro { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .neg-status-row { width: 100%; justify-content: space-between; }
+  
+  .section-header-pro { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .section-title-pro { font-size: 2rem; }
+  .nav-controls-pro { display: none; }
+}
+
+@media (max-width: 480px) {
+  .hero-h1 { font-size: 2rem; }
+  .m-value { font-size: 1.75rem; }
+  .p-info-pro { padding: 1.25rem; }
   .precision-grid-pro { grid-template-columns: 1fr; }
 }
