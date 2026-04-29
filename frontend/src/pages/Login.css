@@ -261,4 +261,24 @@
 @media (max-width: 1200px) {
   .login-hero-panel { display: none; }
   .login-auth-panel { flex: 1; }
+  .login-card-layout { height: auto; min-height: calc(100vh - 80px); }
+}
+
+@media (max-width: 768px) {
+  .login-auth-panel { padding: 2rem 1rem; }
+  .auth-header-new h1 { font-size: 1.75rem; }
+  .sso-row-new { grid-template-columns: 1fr; }
+  
+  .login-global-footer { 
+    height: auto; 
+    flex-direction: column; 
+    gap: 1.5rem; 
+    padding: 2rem 5%;
+    text-align: center;
+  }
+  .footer-right { flex-direction: column; gap: 0.75rem; }
+}
+
+@media (max-height: 800px) and (min-width: 1201px) {
+  .login-card-layout { height: auto; min-height: 100vh; }
 }

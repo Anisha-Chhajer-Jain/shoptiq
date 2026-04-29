@@ -1,11 +1,16 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useMemo, useEffect, useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import NegotiatorBot from './components/NegotiatorBot';
 import Footer from './components/Footer';
 import { logout, loginSuccess } from './store/authSlice';
+import { clearStorageOnLogout } from './utils/storage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 
 // Lazy loading pages for performance optimization
@@ -24,6 +29,7 @@ const Orders = lazy(() => import('./pages/Orders'));
 const Login = lazy(() => import('./pages/Login'));
 const Signup = lazy(() => import('./pages/Signup'));
 const LandingPage = lazy(() => import('./pages/LandingPage'));
+const AddProduct = lazy(() => import('./pages/AddProduct'));
 
 // Skeleton Loader component
 const PageLoader = () => (
@@ -34,18 +40,55 @@ const PageLoader = () => (
 
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
+  const themeMode = useSelector((state) => state.ui?.theme || 'light');
   const dispatch = useDispatch();
+  const [isBotOpen, setIsBotOpen] = useState(false);
+
+  const muiTheme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: themeMode,
+          primary: {
+            main: '#4f46e5', // var(--accent)
+          },
+          background: {
+            default: themeMode === 'light' ? '#f8fafc' : '#0f172a',
+            paper: themeMode === 'light' ? '#ffffff' : '#1e293b',
+          },
+        },
+        typography: {
+          fontFamily: "'Inter', sans-serif",
+        },
+      }),
+    [themeMode]
+  );
+
+  useEffect(() => {
+    // Keep Tailwind/CSS variables in sync with Redux theme
+    if (themeMode === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    // Also save to localStorage for persistence if not handled by redux middleware
+    localStorage.setItem('shoptiq_theme', themeMode);
+  }, [themeMode]);
 
   const handleLogin = (user) => {
     dispatch(loginSuccess(user));
   };
 
   const handleLogout = () => {
+    clearStorageOnLogout();
     dispatch(logout());
   };
 
   return (
-    <div className="app-container">
+    <ThemeProvider theme={muiTheme}>
+      <CssBaseline />
+      <ToastContainer position="top-right" autoClose={3000} theme={themeMode} />
+      <div className="app-container">
       {isAuthenticated && (
         <Navbar 
           onLogout={handleLogout} 
@@ -79,6 +122,7 @@ function App() {
                   <Route path="/analytics" element={<Analytics />} />
                   <Route path="/negotiation" element={<NegotiationHub />} />
                   <Route path="/orders" element={<Orders />} />
+                  <Route path="/add-product" element={<AddProduct />} />
                   <Route path="*" element={<Navigate to="/dashboard" />} />
                 </>
               ) : (
@@ -89,9 +133,38 @@ function App() {
         </main>
       </div>
 
-      {isAuthenticated && <NegotiatorBot />}
+      {isAuthenticated && (
+        <>
+          <button 
+            className="floating-assistant-btn" 
+            onClick={() => setIsBotOpen(true)}
+            style={{
+              position: 'fixed',
+              bottom: '2rem',
+              right: '2rem',
+              backgroundColor: '#0f172a',
+              color: 'white',
+              padding: '0.75rem 1.5rem',
+              borderRadius: '9999px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontWeight: '600',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+              border: 'none',
+              cursor: 'pointer',
+              zIndex: 1000,
+            }}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Assistant
+          </button>
+          <NegotiatorBot isOpen={isBotOpen} onClose={() => setIsBotOpen(false)} />
+        </>
+      )}
       <Footer />
     </div>
+    </ThemeProvider>
   );
 }
 

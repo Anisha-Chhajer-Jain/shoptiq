@@ -129,8 +129,38 @@
 
 .landing-bottom-bar { text-align: center; padding: 4rem; color: #94a3b8; font-weight: 700; font-size: 0.9rem; }
 
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .landing-hero, .features-mix, .trust-section { grid-template-columns: 1fr; }
   .feat-inventory-card { grid-template-columns: 1fr; }
   .ar-content-wrap { width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .nav-links-mid { display: none; }
+  .landing-nav { padding: 1rem 5%; }
+  
+  .landing-hero { padding: 4rem 5%; gap: 3rem; }
+  .hero-title { font-size: 2.75rem; }
+  .hero-sub { font-size: 1.1rem; }
+  .hero-actions { flex-direction: column; }
+  .btn-primary-hero, .btn-outline-hero { width: 100%; text-align: center; }
+
+  .crisis-section { padding: 6rem 5%; }
+  .gaps-grid { grid-template-columns: 1fr; }
+  
+  .feat-text { padding: 2.5rem; }
+  .feat-text h3 { font-size: 1.5rem; }
+  .loc-pills { flex-wrap: wrap; }
+
+  .ar-fashion-fix { height: auto; min-height: 500px; margin-bottom: 6rem; }
+  .ar-content-wrap { padding: 3rem; position: relative; background: rgba(0,0,0,0.7); }
+
+  .trust-section { gap: 3rem; }
+  .expectation-meter-card { padding: 2.5rem; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 2.25rem; }
+  .nav-logo { font-size: 1.25rem; }
+  .btn-get-started { display: none; } /* Show only Login or keep it minimal */
 }

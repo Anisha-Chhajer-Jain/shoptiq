@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Cart.css';
 
-const Cart = ({ onCheckout, onNavigate }) => {
+const Cart = () => {
+  const navigate = useNavigate();
   const [items, setItems] = useState([
     { id: 1, name: 'Swift-Core Enterprise Hubs', sku: 'SCH-902-X', price: 8500, original: 10500, qty: 3, discount: 2000, img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=200' },
     { id: 2, name: 'Quantum Series Workstation', price: 42000, qty: 1, img: 'https://images.unsplash.com/photo-1587831990711-23ca6441447b?auto=format&fit=crop&q=80&w=200', hasGroupBuy: true },
@@ -72,7 +74,7 @@ const Cart = ({ onCheckout, onNavigate }) => {
                           <p>Join 12 others to drop price to ₹38,500.00</p>
                         </div>
                       </div>
-                      <button className="join-gb-btn" onClick={() => onNavigate('groupbuy')}>Join Group Buy</button>
+                      <button className="join-gb-btn" onClick={() => navigate('/groupbuy')}>Join Group Buy</button>
                     </div>
                   )}
 
@@ -97,7 +99,7 @@ const Cart = ({ onCheckout, onNavigate }) => {
                <strong>Need volume pricing?</strong>
                <p>Start a dynamic negotiation for orders over ₹50k.</p>
             </div>
-            <button className="btn-negotiate" onClick={() => onNavigate('negotiation-hub')}>New Negotiation</button>
+            <button className="btn-negotiate" onClick={() => navigate('/negotiation')}>New Negotiation</button>
           </div>
         </div>
 
@@ -133,7 +135,7 @@ const Cart = ({ onCheckout, onNavigate }) => {
               <div className="total-value">₹{finalTotal.toLocaleString()}</div>
             </div>
 
-            <button className="btn-checkout-secure" onClick={onCheckout}>
+            <button className="btn-checkout-secure" onClick={() => navigate('/checkout')}>
                Secure Checkout
                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </button>
@@ -146,7 +148,7 @@ const Cart = ({ onCheckout, onNavigate }) => {
           <div className="enterprise-quote-card">
              <strong>Enterprise Quote?</strong>
              <p>Orders over $25k qualify for custom negotiation with a regional agent.</p>
-             <button className="btn-talk-sales" onClick={() => onNavigate('negotiation-hub')}>Talk to Sales</button>
+             <button className="btn-talk-sales" onClick={() => navigate('/negotiation')}>Talk to Sales</button>
           </div>
         </aside>
       </div>

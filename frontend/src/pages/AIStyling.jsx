@@ -5,7 +5,75 @@ const AIStyling = () => {
   const [height, setHeight] = useState(180);
   const [weight, setWeight] = useState(75);
   const [bodyShape, setBodyShape] = useState('Inverted Triangle');
-  const [isCameraActive, setIsCameraActive] = useState(false);
+  const [file, setFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [dragActive, setDragActive] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setDragActive(true);
+    } else if (e.type === "dragleave") {
+      setDragActive(false);
+    }
+  };
+
+  const validateFile = (selectedFile) => {
+    const validTypes = ['image/jpeg', 'image/jpg', 'application/pdf'];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
+    if (!validTypes.includes(selectedFile.type)) {
+      return 'Invalid file type. Please upload a JPG or PDF file.';
+    }
+    if (selectedFile.size > maxSize) {
+      return 'File size exceeds 5MB limit.';
+    }
+    return null;
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handleFileSelection(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    if (e.target.files && e.target.files[0]) {
+      handleFileSelection(e.target.files[0]);
+    }
+  };
+
+  const handleFileSelection = (selectedFile) => {
+    const error = validateFile(selectedFile);
+    if (error) {
+      setErrorMsg(error);
+      setFile(null);
+      setPreviewUrl(null);
+      return;
+    }
+    
+    setErrorMsg('');
+    setFile(selectedFile);
+    
+    if (selectedFile.type.startsWith('image/')) {
+      setPreviewUrl(URL.createObjectURL(selectedFile));
+    } else {
+      setPreviewUrl('pdf'); // Indicator for PDF preview
+    }
+  };
+
+  const removeFile = () => {
+    setFile(null);
+    setPreviewUrl(null);
+    setErrorMsg('');
+  };
 
   const shapes = [
     { icon: '⬜', label: 'Rectangle' },
@@ -56,30 +124,69 @@ const AIStyling = () => {
               </div>
             </section>
 
-            <section className="ar-scan-card-pro">
-              <div className="ar-scan-content-pro">
-                <span className="ar-badge-pro-hub">SMART FEATURE</span>
-                <h3>AR Body Scan</h3>
-                <p>Instant 3D body mapping for 99.8% measurement accuracy using your device's LiDAR.</p>
-                <button 
-                  className={`init-cam-btn-pro ${isCameraActive ? 'active' : ''}`}
-                  onClick={() => setIsCameraActive(!isCameraActive)}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
-                    <circle cx="12" cy="13" r="4"></circle>
-                  </svg>
-                  {isCameraActive ? 'Stop Mapping' : 'Initialize Scan'}
-                </button>
+            <section className="file-upload-card-pro">
+              <div className="file-upload-header-pro">
+                <span className="upload-badge-pro">DOCUMENT UPLOAD</span>
+                <h3>Upload References</h3>
+                <p>Securely upload your body measurement documents (JPG or PDF, max 5MB) for manual review by our styling team.</p>
               </div>
-              <div className="ar-visual-pro-placeholder">
-                <div className={`silhouette-pro ${isCameraActive ? 'scanning' : ''}`}>
-                  <svg width="200" height="200" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
-                  </svg>
-                </div>
-                {isCameraActive && <div className="scan-line-pro"></div>}
+              
+              <div 
+                className={`upload-dropzone-pro ${dragActive ? 'drag-active' : ''} ${file ? 'has-file' : ''}`}
+                onDragEnter={handleDrag}
+                onDragLeave={handleDrag}
+                onDragOver={handleDrag}
+                onDrop={handleDrop}
+              >
+                {!file ? (
+                  <>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="upload-icon-pro">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="17 8 12 3 7 8"></polyline>
+                      <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <div className="upload-text-pro">
+                      <h4>Drag & Drop your file here</h4>
+                      <p>or click to browse</p>
+                    </div>
+                    <input 
+                      type="file" 
+                      id="file-upload" 
+                      className="file-input-hidden" 
+                      accept=".jpg,.jpeg,.pdf"
+                      onChange={handleChange}
+                    />
+                    <label htmlFor="file-upload" className="browse-btn-pro">Browse Files</label>
+                  </>
+                ) : (
+                  <div className="file-preview-pro">
+                    {previewUrl === 'pdf' ? (
+                      <div className="pdf-preview-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                          <polyline points="14 2 14 8 20 8"></polyline>
+                          <line x1="16" y1="13" x2="8" y2="13"></line>
+                          <line x1="16" y1="17" x2="8" y2="17"></line>
+                          <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                      </div>
+                    ) : (
+                      <img src={previewUrl} alt="Preview" className="image-preview-pro" />
+                    )}
+                    <div className="file-details-pro">
+                      <span className="file-name-pro">{file.name}</span>
+                      <span className="file-size-pro">{(file.size / (1024 * 1024)).toFixed(2)} MB</span>
+                    </div>
+                    <button className="remove-file-btn" onClick={removeFile} title="Remove file">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                  </div>
+                )}
               </div>
+              {errorMsg && <div className="upload-error-pro">{errorMsg}</div>}
             </section>
 
             <section className="insights-card-pro-blue">

@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../services/api';
 import { PRODUCTS, NEGOTIATIONS, GROUP_BUYS } from '../data/products';
 import './Dashboard.css';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [dbProducts, setDbProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const { data } = await api.get('/products');
+        setDbProducts(data);
+      } catch (error) {
+        console.error('Failed to fetch DB products', error);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   return (
     <div className="dashboard-root">
@@ -115,6 +129,31 @@ const Dashboard = () => {
                       <span className="p-old-price-pro" style={{ textDecoration: 'line-through', color: '#94a3b8', fontSize: '0.8rem', marginLeft: '8px' }}>₹{product.oldPrice.toLocaleString()}</span>
                    </div>
                    <span className="p-offer-pro">{product.discount} SAVINGS</span>
+                </div>
+              </div>
+            </div>
+          ))}
+          {/* Render Products fetched from MongoDB */}
+          {dbProducts.map((product) => (
+            <div key={product._id} className="p-card-pro" onClick={() => navigate(`/product/${product._id}`)}>
+              <div className="p-img-pro">
+                <img src={product.img || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80'} alt={product.name} />
+                <span className={`p-stock-pro in-stock`}>IN STOCK</span>
+                <button className="p-add-pro" onClick={(e) => { 
+                   e.stopPropagation(); 
+                   navigate('/cart');
+                }}>
+                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+              </div>
+              <div className="p-info-pro">
+                <span className="p-brand-pro">{product.category}</span>
+                <h4 className="p-name-pro">{product.name}</h4>
+                <div className="p-footer-pro">
+                   <div className="p-pricing-pro">
+                      <span className="p-price-pro">₹{product.price.toLocaleString()}</span>
+                   </div>
+                   <span className="p-offer-pro">NEW</span>
                 </div>
               </div>
             </div>

@@ -1,13 +1,39 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import api from '../services/api';
 import './Login.css';
 
 const Login = ({ onLogin }) => {
   const [role, setRole] = useState('buyer');
 
-  const handleSubmit = (e) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (onLogin) onLogin(true);
+    try {
+      // Try logging in
+      const { data } = await api.post('/auth/login', { email, password });
+      localStorage.setItem('shoptiq_token', data.token);
+      if (onLogin) onLogin(data);
+      toast.success('Logged in successfully!');
+    } catch (error) {
+      // If login fails, try auto-registering for demo purposes
+      try {
+        const { data } = await api.post('/auth/register', { 
+          name: 'Enterprise User', 
+          email, 
+          password, 
+          role: role 
+        });
+        localStorage.setItem('shoptiq_token', data.token);
+        if (onLogin) onLogin(data);
+        toast.success('Account created and logged in!');
+      } catch (regError) {
+        toast.error(error.message || 'Authentication failed');
+      }
+    }
   };
 
   return (
@@ -67,7 +93,7 @@ const Login = ({ onLogin }) => {
                 <label>Enterprise Email</label>
                 <div className="input-with-icon">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
-                  <input type="email" placeholder="name@company.com" required />
+                  <input type="email" placeholder="name@company.com" required value={email} onChange={(e) => setEmail(e.target.value)} />
                 </div>
               </div>
 
@@ -78,7 +104,7 @@ const Login = ({ onLogin }) => {
                 </div>
                 <div className="input-with-icon">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                  <input type="password" placeholder="••••••••" required />
+                  <input type="password" placeholder="••••••••" required value={password} onChange={(e) => setPassword(e.target.value)} />
                   <button type="button" className="eye-toggle">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
                   </button>

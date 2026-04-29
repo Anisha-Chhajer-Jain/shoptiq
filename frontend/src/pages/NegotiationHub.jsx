@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { NEGOTIATIONS } from '../data/products';
 import './NegotiationHub.css';
 
-const NegotiationHub = ({ onNavigate }) => {
+const NegotiationHub = () => {
+  const navigate = useNavigate();
   const [activeDealId, setActiveDealId] = useState(NEGOTIATIONS[0].id);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const activeDeal = NEGOTIATIONS.find(d => d.id === activeDealId) || NEGOTIATIONS[0];
 
@@ -15,15 +19,21 @@ const NegotiationHub = ({ onNavigate }) => {
   ];
 
   const handleAction = (type) => {
-    alert(`Action "${type}" recorded for ${activeDeal.name}. Processing settlement...`);
-    if (type === 'accept') onNavigate('checkout');
+    toast.info(`Action "${type}" recorded for ${activeDeal.name}. Processing settlement...`);
+    if (type === 'accept') navigate('/checkout');
+  };
+
+  const handleStartNewNegotiation = (e) => {
+    e.preventDefault();
+    setIsModalOpen(false);
+    toast.success('New negotiation request sent successfully! Awaiting seller response.');
   };
 
   return (
     <div className="neg-hub-root">
       <header className="neg-hub-header animate-fade-in">
         <div className="neg-hub-title-area">
-          <h2 onClick={() => onNavigate('dashboard')} style={{ cursor: 'pointer' }}>
+          <h2 onClick={() => navigate('/dashboard')} style={{ cursor: 'pointer' }}>
              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" style={{ marginRight: '10px', display: 'inline-block' }}><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
              Smart Negotiation Hub
           </h2>
@@ -68,8 +78,8 @@ const NegotiationHub = ({ onNavigate }) => {
            
            <button 
              className="new-neg-btn" 
-             style={{ marginTop: 'auto', padding: '1.25rem', background: '#1e293b', color: 'white', borderRadius: '12px', fontWeight: '800', border: 'none', cursor: 'pointer' }}
-             onClick={() => onNavigate('dashboard')}
+             style={{ marginTop: 'auto', padding: '1.25rem', background: '#1e293b', color: 'white', borderRadius: '12px', fontWeight: '800', border: 'none', cursor: 'pointer', transition: 'all 0.2s' }}
+             onClick={() => setIsModalOpen(true)}
            >
              + New Negotiation
            </button>
@@ -172,6 +182,35 @@ const NegotiationHub = ({ onNavigate }) => {
             ))}
          </div>
       </div>
+
+      {isModalOpen && (
+        <div className="modal-overlay" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+          <div className="modal-content" style={{ background: 'var(--bg-card)', padding: '2rem', borderRadius: '16px', width: '90%', maxWidth: '500px', boxShadow: 'var(--shadow-xl)' }}>
+            <h2 style={{ marginBottom: '1rem' }}>Start New Negotiation</h2>
+            <form onSubmit={handleStartNewNegotiation} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Product ID or Link</label>
+                <input type="text" required placeholder="Paste product ID..." style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)' }} />
+              </div>
+              <div style={{ display: 'flex', gap: '1rem' }}>
+                <div style={{ flex: 1 }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Target Quantity</label>
+                  <input type="number" required placeholder="e.g. 50" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)' }} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Target Unit Price (₹)</label>
+                  <input type="number" required placeholder="e.g. 3500" style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border)' }} />
+                </div>
+              </div>
+              <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', justifyContent: 'flex-end' }}>
+                <button type="button" onClick={() => setIsModalOpen(false)} style={{ padding: '0.75rem 1.5rem', border: '1px solid var(--border)', background: 'transparent', borderRadius: '8px', cursor: 'pointer' }}>Cancel</button>
+                <button type="submit" style={{ padding: '0.75rem 1.5rem', background: 'var(--primary)', color: 'var(--bg-main)', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600 }}>Send Initial Offer</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };

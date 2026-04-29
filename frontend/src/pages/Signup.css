@@ -210,5 +210,14 @@
 @media (max-width: 1024px) {
   .signup-card-layout { grid-template-columns: 1fr; }
   .signup-hero-panel { display: none; }
-  .signup-auth-panel { padding: 2rem; }
+  .signup-auth-panel { padding: 2rem 1rem; }
+}
+
+@media (max-width: 768px) {
+  .auth-header-new h1 { font-size: 1.75rem; }
+  .auth-form-new { gap: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .role-toggle-group { flex-direction: column; gap: 4px; }
 }
