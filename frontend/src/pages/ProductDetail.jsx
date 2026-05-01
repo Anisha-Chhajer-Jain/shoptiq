@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -10,6 +10,7 @@ const ProductDetail = ({ onNegotiate, onNavigate }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { localProducts } = useSelector((state) => state.products);
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [height, setHeight] = useState(185);
@@ -18,6 +19,22 @@ const ProductDetail = ({ onNegotiate, onNavigate }) => {
 
   useEffect(() => {
     const fetchProduct = async () => {
+      // 1. Check if it's a locally added product first
+      const localMatch = localProducts.find(p => p.id === id || p._id === id);
+      if (localMatch) {
+        setProduct({
+          ...localMatch,
+          title: localMatch.name || localMatch.title,
+          thumbnail: localMatch.img || localMatch.thumbnail,
+          images: localMatch.images || [localMatch.img || localMatch.thumbnail],
+          rating: localMatch.rating || 4.5,
+          discountPercentage: localMatch.discountPercentage || 0,
+        });
+        setLoading(false);
+        return;
+      }
+
+      // 2. Fallback to API if not local
       try {
         const response = await axios.get(`https://dummyjson.com/products/${id || 1}`);
         setProduct(response.data);
@@ -28,7 +45,7 @@ const ProductDetail = ({ onNegotiate, onNavigate }) => {
       }
     };
     fetchProduct();
-  }, [id]);
+  }, [id, localProducts]);
 
   const getRecommendedSize = () => {
     if (height > 180 && weight > 80) return 'Large (Slim Fit)';
