@@ -31,6 +31,7 @@ const Login = lazy(() => import('./pages/Login'));
 const Signup = lazy(() => import('./pages/Signup'));
 const LandingPage = lazy(() => import('./pages/LandingPage'));
 const AddProduct = lazy(() => import('./pages/AddProduct'));
+const Support = lazy(() => import('./pages/Support'));
 
 // Skeleton Loader component
 const PageLoader = () => (
@@ -100,7 +101,7 @@ function App() {
       )}
       
       <div className={`app-body-layout ${isAuthenticated ? 'with-sidebar' : ''}`}>
-        {isAuthenticated && <Sidebar />}
+        {isAuthenticated && <Sidebar onLogout={handleLogout} />}
         
         <main className="main-content-view">
           <Suspense fallback={<PageLoader />}>
@@ -126,6 +127,7 @@ function App() {
                   <Route path="/analytics" element={<Analytics />} />
                   <Route path="/negotiation" element={<NegotiationHub />} />
                   <Route path="/orders" element={<Orders />} />
+                  <Route path="/support" element={<Support />} />
                   <Route path="/add-product" element={<AddProduct />} />
                   <Route path="*" element={<Navigate to="/dashboard" />} />
                 </>

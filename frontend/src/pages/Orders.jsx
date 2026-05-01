@@ -34,8 +34,7 @@ const Orders = () => {
   );
 
   return (
-    <div className="orders-root">
-      {/* ── Header ── */}
+    <div className="orders-root animate-zoom-in-3d">
       <header className="orders-management-header">
         <div className="header-title-section">
           <h1>Orders Management</h1>
@@ -54,7 +53,7 @@ const Orders = () => {
       </header>
 
       {/* ── Stats Row ── */}
-      <div className="orders-stats-grid">
+      <div className="orders-stats-grid stagger-items">
         <div className="stat-card-pro">
           <div className="stat-info">
             <h3>New Orders</h3>

@@ -84,7 +84,7 @@ const Inventory = () => {
   };
 
   return (
-    <div className="inventory-root">
+    <div className="inventory-root animate-slide-right-3d">
       <aside className="inventory-sidebar">
         <div className="sidebar-header">
           <h3>Live Mapping Inventory</h3>
@@ -101,7 +101,7 @@ const Inventory = () => {
           />
         </div>
 
-        <div className="store-list">
+        <div className="store-list stagger-items">
           {stores.map((store) => (
             <div 
               key={store.name} 
