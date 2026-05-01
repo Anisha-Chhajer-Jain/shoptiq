@@ -22,7 +22,7 @@ const GroupBuy = () => {
       <div className="gb-hero-grid">
         <section className="gb-hero-main">
           <span className="hero-status-pill">Active Now</span>
-          <h1 className="hero-title">OmniCommerce Group Buy Portal</h1>
+          <h1 className="hero-title">Shoptiq Group Buy Portal</h1>
           <p className="hero-sub">Join high-volume pools to unlock enterprise-grade pricing. Collective bargaining power, simplified for your business.</p>
           <div className="hero-actions">
             <button className="btn-primary-hub">Explore Pools</button>

@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 export const SEO = ({ title, description, keywords, image, url }) => {
   const siteName = import.meta.env.VITE_APP_NAME || 'Shoptiq';
   const fullTitle = title ? `${title} | ${siteName}` : siteName;
-  const defaultDescription = 'Welcome to Shoptiq - your smart omnicommerce destination.';
+  const defaultDescription = 'Welcome to Shoptiq - your smart unified commerce destination.';
   
   return (
     <Helmet>

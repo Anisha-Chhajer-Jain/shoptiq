@@ -9,8 +9,8 @@ const LandingPage = () => {
   return (
     <div className="landing-root">
       <SEO
-        title="Welcome to OmniCommerce"
-        description="Experience the future of shopping with our smart omnicommerce platform. AI-driven styling, real-time negotiation, and bulk buying made simple."
+        title="Welcome to Shoptiq"
+        description="Experience the future of shopping with Shoptiq's smart unified commerce platform. AI-driven styling, real-time negotiation, and bulk buying made simple."
       />
 
       <header className="landing-header">

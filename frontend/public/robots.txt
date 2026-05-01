@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+Allow: /product/
+Allow: /category/
+Allow: /info/
+
+# Disallow sensitive or dynamic user paths
+Disallow: /cart
+Disallow: /checkout
+Disallow: /orders
+Disallow: /aistyling
+Disallow: /negotiation
+Disallow: /search
+
+# Disallow management paths
+Disallow: /analytics
+Disallow: /add-product
+
+Sitemap: https://shoptiq.com/sitemap.xml
