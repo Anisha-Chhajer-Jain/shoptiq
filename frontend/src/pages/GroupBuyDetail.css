@@ -51,7 +51,6 @@
   align-items: start;
 }
 
-/* Status Card */
 .gbd-status-card {
   background-color: var(--bg-card);
   border-radius: 1.5rem;
