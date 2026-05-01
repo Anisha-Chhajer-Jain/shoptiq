@@ -20,6 +20,7 @@ const AddProductSchema = Yup.object().shape({
     .min(0, 'Stock cannot be negative')
     .required('Stock quantity is required'),
   category: Yup.string().required('Category is required'),
+  size: Yup.string().required('Size is required'),
   description: Yup.string()
     .min(10, 'Description must be at least 10 characters long')
     .required('Description is required'),
@@ -33,6 +34,7 @@ const AddProduct = () => {
     price: '',
     stock: '',
     category: '',
+    size: '',
     description: '',
   };
 
@@ -92,24 +94,43 @@ const AddProduct = () => {
                 />
               </div>
 
-              <div className="form-row">
-                <div className="form-group full">
-                  <label htmlFor="category">Category</label>
-                  <FormInput
-                    as="select"
-                    name="category"
-                    id="category"
-                    className="form-select"
-                    full
-                  >
-                    <option value="">Select a category</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="clothing">Clothing & Fashion</option>
-                    <option value="home">Home & Furniture</option>
-                    <option value="sports">Sports & Outdoors</option>
-                  </FormInput>
+                <div className="form-row split">
+                  <div className="form-group full">
+                    <label htmlFor="category">Category</label>
+                    <FormInput
+                      as="select"
+                      name="category"
+                      id="category"
+                      className="form-select"
+                      full
+                    >
+                      <option value="">Select a category</option>
+                      <option value="electronics">Electronics</option>
+                      <option value="clothing">Clothing & Fashion</option>
+                      <option value="home">Home & Furniture</option>
+                      <option value="sports">Sports & Outdoors</option>
+                    </FormInput>
+                  </div>
+                  
+                  <div className="form-group full">
+                    <label htmlFor="size">Size</label>
+                    <FormInput
+                      as="select"
+                      name="size"
+                      id="size"
+                      className="form-select"
+                      full
+                    >
+                      <option value="">Select a size</option>
+                      <option value="XS">Extra Small (XS)</option>
+                      <option value="S">Small (S)</option>
+                      <option value="M">Medium (M)</option>
+                      <option value="L">Large (L)</option>
+                      <option value="XL">Extra Large (XL)</option>
+                      <option value="OS">One Size (OS)</option>
+                    </FormInput>
+                  </div>
                 </div>
-              </div>
 
               <div className="form-row">
                 <div className="form-group full">
