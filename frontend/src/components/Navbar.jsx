@@ -58,13 +58,6 @@ const Navbar = ({ onLogout, cartCount = 0 }) => {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleSearchSubmit}
             />
-            <button 
-              className="visual-search-trigger" 
-              title="AI Visual Search"
-              onClick={() => alert("Initializing AI Computer Vision... Please upload or drag an image to find matching inventory.")}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-            </button>
           </div>
         </div>
 

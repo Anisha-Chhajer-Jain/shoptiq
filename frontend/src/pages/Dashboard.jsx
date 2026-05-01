@@ -42,72 +42,66 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="dashboard-root">
-
-
-      {/* ── Hero Banner ── */}
-      <section className="hero-banner-pro">
+    <div className="dashboard-root animate-fade-in">
+      <section className="hero-banner-pro animate-slide-in-3d">
         <div className="hero-content-pro">
           <div className="hero-badge-hub">
             <span className="dot"></span>
-            UNIFIED COMMERCE 2.0
+            LIVE COMMERCE PORTAL
           </div>
-          <h1 className="hero-h1">Shopping, Exactly How You Expect It.</h1>
-          <p className="hero-p">Experience zero-friction commerce with verified live stock, dynamic smart pricing, and high-fidelity AR visualization.</p>
+          <h1 className="hero-h1">Command your retail <br /> empire with precision.</h1>
+          <p className="hero-p">Manage inventory, negotiate deals, and scale your business with Shoptiq's enterprise-grade commerce engine.</p>
           <div className="hero-btns">
-            <button className="btn-solid" onClick={() => navigate('/groupbuy')}>Explore Group Pools</button>
-            <button className="btn-blur" onClick={() => navigate('/aistyling')}>Style Profile</button>
+            <button className="btn-solid" onClick={() => navigate('/inventory')}>Inventory Map</button>
+            <button className="btn-blur" onClick={() => navigate('/orders')}>Active Orders</button>
           </div>
         </div>
-        <div className="hero-metric-pro">
-           <div className="m-label">ACTIVE SAVINGS</div>
-           <div className="m-value">₹8,450</div>
-           <div className="m-trend">+12.5% THIS WEEK</div>
+        <div className="hero-metric-pro animate-float-3d">
+          <div className="m-label">TOTAL REVENUE (MTD)</div>
+          <div className="m-value">₹8,42,900</div>
+          <div className="m-trend">↑ 12.5% from last month</div>
         </div>
       </section>
 
-      {/* ── Main Dashboard Grid ── */}
-      <div className="dashboard-main-grid">
-        {/* Left: Negotiation Hub */}
+      <div className="dashboard-main-grid stagger-items">
         <section className="dashboard-card-section">
           <div className="card-section-header">
             <h3>Negotiation Hub</h3>
-            <button className="card-link" onClick={() => navigate('/negotiation')}>View All</button>
+            <button className="card-link" onClick={() => navigate('/negotiation')}>VIEW ALL</button>
           </div>
           <div className="neg-stack-pro">
             {NEGOTIATIONS.map((neg) => (
               <div key={neg.id} className="neg-item-pro">
                 <div className="neg-info">
-                  <strong>{neg.name}</strong>
-                  <p>Asking: ₹{neg.asking.toLocaleString()} • Bid: <span className="blue">₹{neg.bid.toLocaleString()}</span></p>
+                  <strong>{neg.product}</strong>
+                  <p>Current Bid: <span className="blue">₹{neg.currentBid}</span></p>
                 </div>
                 <div className="neg-status-row">
-                   <span className={`status-tag ${neg.type}`}>{neg.status}</span>
-                   <button className="btn-manage-pro" onClick={() => navigate('/negotiation')}>Manage</button>
+                   <span className={`status-tag ${neg.status === 'New Offer' ? 'offer' : 'waiting'}`}>{neg.status.toUpperCase()}</span>
+                   <button className="btn-manage-pro" onClick={() => navigate('/negotiation')}>MANAGE</button>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Right: Featured Group Buys */}
         <section className="dashboard-card-section">
           <div className="card-section-header">
-            <h3>Featured Group Buys</h3>
-            <button className="card-link" onClick={() => navigate('/groupbuy')}>Browse Pools</button>
+            <h3>Group Buy Pools</h3>
+            <button className="card-link" onClick={() => navigate('/groupbuy')}>EXPLORE</button>
           </div>
           <div className="gb-stack-pro">
-            {GROUP_BUYS.map((gb) => (
-              <div key={gb.id} className="gb-item-pro" onClick={() => navigate('/groupbuy')}>
-                <div className="gb-img-mini" style={{ backgroundImage: `url(${gb.img})` }}>
-                  <div className="gb-discount-pro">{gb.discount}</div>
+            {GROUP_BUYS.map((pool) => (
+              <div key={pool.id} className="gb-item-pro" onClick={() => navigate(`/groupbuy/${pool.id}`)}>
+                <div className="gb-img-mini" style={{ backgroundImage: `url(${pool.img})` }}>
+                  <span className="gb-discount-pro">{pool.discount} OFF</span>
                 </div>
                 <div className="gb-details-pro">
-                  <strong>{gb.name}</strong>
+                  <strong>{pool.name}</strong>
                   <div className="gb-bar-pro">
-                    <div className="fill" style={{ width: `${gb.progress}%` }}></div>
+                    <div className="fill" style={{ width: `${pool.progress}%` }}></div>
                   </div>
-                  <p>{gb.backers} backers • {gb.needed} more needed</p>
+                  <p>{pool.participants} Joined • {pool.timeLeft} Left</p>
                 </div>
               </div>
             ))}
@@ -115,21 +109,19 @@ const Dashboard = () => {
         </section>
       </div>
 
-      {/* ── Precision Collection ── */}
       <section className="collection-section-pro">
         <div className="section-header-pro">
-          <div>
+          <div className="section-info-pro">
             <h2 className="section-title-pro">The Precision Collection</h2>
             <p className="section-subtitle-pro">Curated high-fidelity essentials for the modern professional.</p>
           </div>
           <div className="nav-controls-pro">
-            <button className="nav-btn">‹</button>
-            <button className="nav-btn">›</button>
+            <button className="nav-btn">{'<'}</button>
+            <button className="nav-btn">{'>'}</button>
           </div>
         </div>
 
-        <div className="precision-grid-pro">
-          {/* Render Locally Added Products Immediately */}
+        <div className="precision-grid-pro stagger-items">
           {localProducts.map((product) => (
             <div key={product.id} className="p-card-pro animate-fade-in" onClick={() => navigate(`/product/${product.id}`)}>
               <div className="p-img-pro">
