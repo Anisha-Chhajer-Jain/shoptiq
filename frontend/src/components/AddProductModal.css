@@ -52,6 +52,84 @@
   color: #ef4444;
 }
 
+/* Image Onboarding */
+.image-onboarding-area {
+  margin-bottom: 0.5rem;
+}
+
+.upload-placeholder {
+  width: 100%;
+  height: 140px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #f8fafc;
+}
+
+.upload-placeholder:hover {
+  border-color: var(--accent);
+  background: #eff6ff;
+}
+
+.icon-stack {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-main { color: #94a3b8; }
+.icon-sub { 
+  position: absolute; 
+  bottom: -2px; 
+  right: -5px; 
+  background: white; 
+  border-radius: 50%;
+  padding: 1px;
+  color: var(--accent);
+}
+
+.upload-placeholder strong { font-size: 0.9rem; color: var(--text-dark); }
+.upload-placeholder p { font-size: 0.75rem; color: var(--text-muted); margin: 0; }
+
+.image-preview-container {
+  width: 100%;
+  height: 160px;
+  border-radius: 1rem;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid var(--accent);
+}
+
+.image-preview-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.btn-remove-img {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(15, 23, 42, 0.8);
+  color: white;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+
 .add-product-form {
   padding: 2rem;
   display: flex;

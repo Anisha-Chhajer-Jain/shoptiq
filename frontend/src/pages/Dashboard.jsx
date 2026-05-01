@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
 import { toast } from 'react-toastify';
 import api from '../services/api';
@@ -11,6 +11,7 @@ import './Dashboard.css';
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { localProducts } = useSelector((state) => state.products);
   const [dbProducts, setDbProducts] = useState([]);
   const [dummyProducts, setDummyProducts] = useState([]);
 
@@ -128,6 +129,39 @@ const Dashboard = () => {
         </div>
 
         <div className="precision-grid-pro">
+          {/* Render Locally Added Products Immediately */}
+          {localProducts.map((product) => (
+            <div key={product.id} className="p-card-pro animate-fade-in" onClick={() => navigate(`/product/${product.id}`)}>
+              <div className="p-img-pro">
+                <img src={product.img} alt={product.name} />
+                <span className="p-stock-pro in-stock">NEW ASSET</span>
+                <button className="p-add-pro" onClick={(e) => { 
+                   e.stopPropagation(); 
+                   dispatch(addToCart({ 
+                     id: product.id, 
+                     name: product.name, 
+                     price: product.price, 
+                     img: product.img, 
+                     discount: 0 
+                   }));
+                   toast.success(`${product.name} added to cart!`);
+                }}>
+                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                </button>
+              </div>
+              <div className="p-info-pro">
+                <span className="p-brand-pro">{product.category.toUpperCase()}</span>
+                <h4 className="p-name-pro">{product.name}</h4>
+                <div className="p-footer-pro">
+                   <div className="p-pricing-pro">
+                      <span className="p-price-pro">₹{product.price.toLocaleString()}</span>
+                   </div>
+                   <span className="p-offer-pro">LOCAL SYNC</span>
+                </div>
+              </div>
+            </div>
+          ))}
+
           {dummyProducts.map((product) => (
             <div key={product.id} className="p-card-pro animate-slide-in-3d" onClick={() => navigate(`/product/${product.id}`)}>
               <div className="p-img-pro">
