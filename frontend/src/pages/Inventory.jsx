@@ -1,9 +1,28 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import './Inventory.css';
 
 const Inventory = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStore, setSelectedStore] = useState('Market Street Flagship');
+
+  const handleReserve = (e, store) => {
+    e.stopPropagation();
+    if (store.statusColor === 'red') {
+      toast.info(`Item is out of stock at ${store.name}.`);
+      return;
+    }
+    toast.success(`Items reserved at ${store.name} for 2 hours!`);
+  };
+
+  const handleSecondaryAction = (e, store) => {
+    e.stopPropagation();
+    if (store.statusColor === 'red') {
+      toast.success(`Alert set! You'll be notified when ${store.name} restocks.`);
+    } else {
+      toast.info(`Starting navigation to ${store.name}...`);
+    }
+  };
 
   const stores = [
     {
@@ -60,10 +79,10 @@ const Inventory = () => {
         </div>
 
         <div className="sidebar-actions">
-          <button className="filter-btn-black">
+          <button className="filter-btn-black" onClick={() => toast.info('Opening filters panel...')}>
             <span className="icon">≡</span> Filters
           </button>
-          <button className="sort-btn">Sort by: Closest</button>
+          <button className="sort-btn" onClick={() => toast.info('Changing sort order...')}>Sort by: Closest</button>
         </div>
 
         <div className="store-list">
@@ -87,10 +106,16 @@ const Inventory = () => {
                 {store.units}
               </div>
               <div className="store-actions">
-                <button className={`reserve-btn ${store.statusColor === 'red' ? 'disabled' : ''}`}>
+                <button 
+                  className={`reserve-btn ${store.statusColor === 'red' ? 'disabled' : ''}`}
+                  onClick={(e) => handleReserve(e, store)}
+                >
                   {store.statusColor === 'red' ? 'Unavailable' : 'Reserve for 2h'}
                 </button>
-                <button className="nav-btn-sm">
+                <button 
+                  className="nav-btn-sm"
+                  onClick={(e) => handleSecondaryAction(e, store)}
+                >
                    {store.statusColor === 'red' ? '🔔' : '🧭'}
                 </button>
               </div>
@@ -140,10 +165,10 @@ const Inventory = () => {
 
           {/* Map Controls */}
           <div className="map-controls">
-            <button className="map-ctrl locate">🎯</button>
+            <button className="map-ctrl locate" onClick={() => toast.info('Locating current position...')}>🎯</button>
             <div className="zoom-group">
-              <button className="map-ctrl">+</button>
-              <button className="map-ctrl">−</button>
+              <button className="map-ctrl" onClick={() => toast.info('Zooming in...')}>+</button>
+              <button className="map-ctrl" onClick={() => toast.info('Zooming out...')}>−</button>
             </div>
           </div>
 
