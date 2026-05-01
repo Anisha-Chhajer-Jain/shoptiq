@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import AddProductModal from './AddProductModal';
 import './Sidebar.css';
 
 const Sidebar = () => {
   const location = useLocation();
   const user = useSelector((state) => state.auth.user);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
   const sidebarItems = [
     { id: 'dashboard', path: '/dashboard', icon: <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>, label: 'Dashboard' },
@@ -25,18 +27,35 @@ const Sidebar = () => {
         <p>SMART UNIFIED COMMERCE</p>
       </div>
       <nav className="sidebar-nav-hub">
-        {sidebarItems.map((item) => (
-          <Link 
-            key={item.id} 
-            to={item.path}
-            className={`sidebar-nav-item ${location.pathname === item.path ? 'active' : ''}`}
-          >
-            <span className="item-icon-svg">{item.icon}</span>
-            <span className="item-label">{item.label}</span>
-            {location.pathname === item.path && <div className="active-curve"></div>}
-          </Link>
-        ))}
+        {sidebarItems.map((item) => {
+          if (item.id === 'add-product') {
+            return (
+              <button 
+                key={item.id} 
+                className="sidebar-nav-item"
+                style={{ width: '100%', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', fontFamily: 'inherit' }}
+                onClick={() => setIsModalOpen(true)}
+              >
+                <span className="item-icon-svg">{item.icon}</span>
+                <span className="item-label">{item.label}</span>
+              </button>
+            );
+          }
+          return (
+            <Link 
+              key={item.id} 
+              to={item.path}
+              className={`sidebar-nav-item ${location.pathname === item.path ? 'active' : ''}`}
+            >
+              <span className="item-icon-svg">{item.icon}</span>
+              <span className="item-label">{item.label}</span>
+              {location.pathname === item.path && <div className="active-curve"></div>}
+            </Link>
+          );
+        })}
       </nav>
+      
+      <AddProductModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </aside>
   );
 };

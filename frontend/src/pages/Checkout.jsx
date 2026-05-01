@@ -92,7 +92,15 @@ const Checkout = () => {
               total: totalCost,
               status: 'Processing',
               items: totalQty || 1, // fallback if cart empty
-              img: cartItems.length > 0 ? cartItems[0].img : 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=200'
+              img: cartItems.length > 0 ? cartItems[0].img : 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=200',
+              cartItems: cartItems,
+              shippingDetails: {
+                name: `${values.firstName} ${values.lastName}`,
+                address: values.address,
+                city: values.city,
+                state: values.state,
+                zipCode: values.zipCode
+              }
             };
             
             dispatch(addOrder(newOrder));

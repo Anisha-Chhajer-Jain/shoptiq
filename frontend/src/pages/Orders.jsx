@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import OrderDetailModal from '../components/OrderDetailModal';
 import './Orders.css';
 
 const Orders = ({ onNavigate }) => {
   const orders = useSelector((state) => state.orders?.orders || []);
+  const [selectedOrder, setSelectedOrder] = useState(null);
 
   return (
     <div className="orders-root">
@@ -34,11 +36,13 @@ const Orders = ({ onNavigate }) => {
                <span className={`status-pill ${order.status.toLowerCase()}`}>
                   ● {order.status}
                </span>
-               <button className="btn-details" onClick={() => toast.info(`Viewing details for order ${order.id}`)}>View Details</button>
+               <button className="btn-details" onClick={() => setSelectedOrder(order)}>View Details</button>
             </div>
           </div>
         ))}
       </div>
+
+      <OrderDetailModal order={selectedOrder} onClose={() => setSelectedOrder(null)} />
     </div>
   );
 };
