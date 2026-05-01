@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearCart } from '../store/cartSlice';
+import { addOrder } from '../store/orderSlice';
 import { toast } from 'react-toastify';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -32,8 +35,14 @@ const CheckoutSchema = Yup.object().shape({
   })
 });
 
-const Checkout = ({ total = 132.62 }) => {
+const Checkout = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart?.items || []);
+  const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.qty), 0);
+  const totalQty = cartItems.reduce((acc, item) => acc + item.qty, 0);
+  const totalCost = subtotal + 10.12; // Flat tax for demo
+  
   const [method, setMethod] = useState('delivery');
   const [payment, setPayment] = useState('now');
   const [promo, setPromo] = useState('');
@@ -76,6 +85,19 @@ const Checkout = ({ total = 132.62 }) => {
         onSubmit={(values) => {
           setTimeout(() => {
             console.log('Order Processed', values);
+            
+            const newOrder = {
+              id: `ORD-${Math.floor(10000 + Math.random() * 90000)}`,
+              date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+              total: totalCost,
+              status: 'Processing',
+              items: totalQty || 1, // fallback if cart empty
+              img: cartItems.length > 0 ? cartItems[0].img : 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80&w=200'
+            };
+            
+            dispatch(addOrder(newOrder));
+            dispatch(clearCart());
+            
             toast.success('Payment successful! Order confirmed.');
             navigate('/orders');
           }, 1500);
@@ -167,8 +189,7 @@ const Checkout = ({ total = 132.62 }) => {
             </div>
 
             <div className="summary-details">
-               <div className="sum-row"><span>Subtotal</span><span>$145.00</span></div>
-               <div className="sum-row discount"><span className="label-with-icon">✓ Negotiation Discount</span><span>−$22.50</span></div>
+               <div className="sum-row"><span>Subtotal</span><span>${subtotal.toLocaleString()}</span></div>
                <div className="sum-row success"><span>Shipping</span><span>FREE</span></div>
                <div className="sum-row"><span>Estimated Tax</span><span>$10.12</span></div>
             </div>
@@ -180,7 +201,7 @@ const Checkout = ({ total = 132.62 }) => {
 
             <div className="total-row-checkout">
                <span className="total-label">Total</span>
-               <span className="total-price">${total.toLocaleString()}</span>
+               <span className="total-price">${totalCost.toLocaleString()}</span>
             </div>
 
             <button type="submit" className="btn-confirm-purchase" disabled={isSubmitting}>
