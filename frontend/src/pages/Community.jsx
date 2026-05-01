@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Community.css';
 
 const Community = () => {
+  const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState('All');
   const [comparisons, setComparisons] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -87,7 +89,12 @@ const Community = () => {
       ) : (
         <div className="comparison-grid-pro">
           {comparisons.map(comp => (
-            <div key={comp.id} className="comparison-card-pro animate-slide-in-3d">
+            <div 
+              key={comp.id} 
+              className="comparison-card-pro animate-slide-in-3d" 
+              onClick={() => navigate(`/product/${comp.id}`)}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="comparison-images-hub">
                 <div className="img-container catalog">
                   <img src={comp.catalogImg} alt="Catalog" />
@@ -115,11 +122,11 @@ const Community = () => {
                     <span className="user-name-hub">{comp.user}</span>
                   </div>
                   <div className="comp-actions-hub">
-                    <button className="comp-action-btn" onClick={() => handleLike(comp.id)}>
+                    <button className="comp-action-btn" onClick={(e) => { e.stopPropagation(); handleLike(comp.id); }}>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
                       {comp.likes}
                     </button>
-                    <button className="comp-action-btn" onClick={() => handleComment(comp.id)}>
+                    <button className="comp-action-btn" onClick={(e) => { e.stopPropagation(); handleComment(comp.id); }}>
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
                       {comp.comments}
                     </button>
