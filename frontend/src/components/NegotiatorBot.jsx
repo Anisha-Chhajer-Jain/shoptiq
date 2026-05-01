@@ -3,7 +3,7 @@ import './NegotiatorBot.css';
 
 const NegotiatorBot = ({ isOpen, onClose, product }) => {
   const [messages, setMessages] = useState([
-    { id: 1, type: 'bot', text: `Hi! I'm your OmniCommerce AI Negotiator. I see you're interested in the ${product?.name || 'this item'}. The current price is ₹${product?.price || '4,500'}. What's your target price?` }
+    { id: 1, type: 'bot', text: `Hi! I'm your Shoptiq AI Negotiator. I see you're interested in the ${product?.name || 'this item'}. The current price is ₹${product?.price || '4,500'}. What's your target price?` }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);

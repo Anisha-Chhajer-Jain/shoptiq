@@ -216,7 +216,7 @@ const Checkout = () => {
                {isSubmitting ? 'Processing Payment...' : 'Confirm Purchase'}
                {!isSubmitting && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>}
             </button>
-            <p className="terms-note">By clicking "Confirm Purchase", you agree to OmniCommerce's Terms of Service and Privacy Policy.</p>
+            <p className="terms-note">By clicking "Confirm Purchase", you agree to Shoptiq's Terms of Service and Privacy Policy.</p>
           </div>
 
           <div className="trust-badges">

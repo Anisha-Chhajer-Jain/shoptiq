@@ -81,7 +81,7 @@ const Footer = () => {
 
         <div className="footer-bottom-bar">
           <div className="f-legal">
-            <p>© {currentYear} Shoptiq OmniCommerce. All rights reserved.</p>
+            <p>© {currentYear} Shoptiq. All rights reserved.</p>
             <div className="legal-links">
               <a href="#">Privacy Policy</a>
               <span className="dot-sep">•</span>
