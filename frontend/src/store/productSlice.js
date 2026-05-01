@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  localProducts: [],
+  localProducts: JSON.parse(localStorage.getItem('shoptiq_local_products')) || [],
 };
 
 const productSlice = createSlice({
@@ -10,9 +10,11 @@ const productSlice = createSlice({
   reducers: {
     addLocalProduct: (state, action) => {
       state.localProducts.unshift(action.payload);
+      localStorage.setItem('shoptiq_local_products', JSON.stringify(state.localProducts));
     },
     setLocalProducts: (state, action) => {
       state.localProducts = action.payload;
+      localStorage.setItem('shoptiq_local_products', JSON.stringify(state.localProducts));
     },
   },
 });
