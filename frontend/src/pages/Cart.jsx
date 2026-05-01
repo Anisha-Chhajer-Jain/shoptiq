@@ -1,23 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateQty, removeItem } from '../store/cartSlice';
 import './Cart.css';
 
 const Cart = () => {
   const navigate = useNavigate();
-  const [items, setItems] = useState([
-    { id: 1, name: 'Swift-Core Enterprise Hubs', sku: 'SCH-902-X', price: 8500, original: 10500, qty: 3, discount: 2000, img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=200' },
-    { id: 2, name: 'Quantum Series Workstation', price: 42000, qty: 1, img: 'https://images.unsplash.com/photo-1587831990711-23ca6441447b?auto=format&fit=crop&q=80&w=200', hasGroupBuy: true },
-    { id: 3, name: 'Audio-Link Pro 5', price: 4500, qty: 5, img: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&q=80&w=200', priceMatch: true }
-  ]);
+  const dispatch = useDispatch();
+  const items = useSelector((state) => state.cart.items);
 
-  const updateQty = (id, delta) => {
-    setItems(items.map(item => 
-      item.id === id ? { ...item, qty: Math.max(1, item.qty + delta) } : item
-    ));
+  const handleUpdateQty = (id, delta) => {
+    dispatch(updateQty({ id, delta }));
   };
 
-  const removeItem = (id) => {
-    setItems(items.filter(item => item.id !== id));
+  const handleRemoveItem = (id) => {
+    dispatch(removeItem(id));
   };
 
   const subtotal = items.reduce((acc, item) => acc + (item.price * item.qty), 0);
@@ -80,13 +77,13 @@ const Cart = () => {
 
                   <div className="item-actions-row">
                     <div className="qty-controls">
-                      <button onClick={() => updateQty(item.id, -1)}>−</button>
+                      <button onClick={() => handleUpdateQty(item.id, -1)}>−</button>
                       <span>{item.qty}</span>
-                      <button onClick={() => updateQty(item.id, 1)}>+</button>
+                      <button onClick={() => handleUpdateQty(item.id, 1)}>+</button>
                     </div>
                     <div className="item-meta-badges">
                       {item.priceMatch && <span className="price-match-badge">✓ Price Match Active</span>}
-                      <button className="remove-btn" onClick={() => removeItem(item.id)}>Remove</button>
+                      <button className="remove-btn" onClick={() => handleRemoveItem(item.id)}>Remove</button>
                     </div>
                   </div>
                 </div>

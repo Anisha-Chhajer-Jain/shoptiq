@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../store/cartSlice';
+import { toast } from 'react-toastify';
 import api from '../services/api';
-import { PRODUCTS, NEGOTIATIONS, GROUP_BUYS } from '../data/products';
+import axios from 'axios';
+import { NEGOTIATIONS, GROUP_BUYS } from '../data/products';
 import './Dashboard.css';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [dbProducts, setDbProducts] = useState([]);
+  const [dummyProducts, setDummyProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -17,7 +23,21 @@ const Dashboard = () => {
         console.error('Failed to fetch DB products', error);
       }
     };
+    
+    const fetchDummyProducts = async () => {
+      try {
+        const [mensRes, womensRes] = await Promise.all([
+          axios.get('https://dummyjson.com/products/category/mens-shirts?limit=4'),
+          axios.get('https://dummyjson.com/products/category/womens-dresses?limit=4')
+        ]);
+        setDummyProducts([...mensRes.data.products, ...womensRes.data.products].sort(() => Math.random() - 0.5));
+      } catch (error) {
+        console.error('Failed to fetch dummy products', error);
+      }
+    };
+
     fetchProducts();
+    fetchDummyProducts();
   }, []);
 
   return (
@@ -108,27 +128,38 @@ const Dashboard = () => {
         </div>
 
         <div className="precision-grid-pro">
-          {PRODUCTS.map((product) => (
-            <div key={product.id} className="p-card-pro" onClick={() => navigate(`/product/${product.id}`)}>
+          {dummyProducts.map((product) => (
+            <div key={product.id} className="p-card-pro animate-slide-in-3d" onClick={() => navigate(`/product/${product.id}`)}>
               <div className="p-img-pro">
-                <img src={product.img} alt={product.name} />
-                <span className={`p-stock-pro ${product.status.toLowerCase().replace(' ', '-')}`}>{product.status}</span>
+                <img src={product.thumbnail} alt={product.title} />
+                <span className={`p-stock-pro ${product.stock > 0 ? 'in-stock' : 'out-of-stock'}`}>{product.stock > 0 ? 'IN STOCK' : 'OUT OF STOCK'}</span>
                 <button className="p-add-pro" onClick={(e) => { 
                    e.stopPropagation(); 
-                   navigate('/cart');
+                   dispatch(addToCart({ 
+                     id: product.id, 
+                     name: product.title, 
+                     price: product.price, 
+                     img: product.thumbnail, 
+                     discount: product.discountPercentage > 10 ? (product.price * 0.1) : 0 
+                   }));
+                   toast.success(`${product.title} added to cart!`);
                 }}>
                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>
               </div>
               <div className="p-info-pro">
-                <span className="p-brand-pro">{product.brand}</span>
-                <h4 className="p-name-pro">{product.name}</h4>
+                <span className="p-brand-pro">{product.brand || product.category.toUpperCase()}</span>
+                <h4 className="p-name-pro">{product.title}</h4>
                 <div className="p-footer-pro">
                    <div className="p-pricing-pro">
-                      <span className="p-price-pro">₹{product.price.toLocaleString()}</span>
-                      <span className="p-old-price-pro" style={{ textDecoration: 'line-through', color: '#94a3b8', fontSize: '0.8rem', marginLeft: '8px' }}>₹{product.oldPrice.toLocaleString()}</span>
+                      <span className="p-price-pro">${product.price.toFixed(2)}</span>
+                      {product.discountPercentage > 0 && (
+                        <span className="p-old-price-pro" style={{ textDecoration: 'line-through', color: '#94a3b8', fontSize: '0.8rem', marginLeft: '8px' }}>
+                          ${(product.price / (1 - product.discountPercentage / 100)).toFixed(2)}
+                        </span>
+                      )}
                    </div>
-                   <span className="p-offer-pro">{product.discount} SAVINGS</span>
+                   <span className="p-offer-pro">{Math.round(product.discountPercentage)}% OFF</span>
                 </div>
               </div>
             </div>
@@ -141,7 +172,14 @@ const Dashboard = () => {
                 <span className={`p-stock-pro in-stock`}>IN STOCK</span>
                 <button className="p-add-pro" onClick={(e) => { 
                    e.stopPropagation(); 
-                   navigate('/cart');
+                   dispatch(addToCart({ 
+                     id: product._id, 
+                     name: product.name, 
+                     price: product.price, 
+                     img: product.img || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80', 
+                     discount: 0 
+                   }));
+                   toast.success(`${product.name} added to cart!`);
                 }}>
                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 </button>

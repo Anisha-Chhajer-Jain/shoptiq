@@ -40,8 +40,8 @@ const LandingPage = () => {
 
       <main>
         <section className="hero-section">
-          <div className="hero-copy">
-            <span className="hero-badge">UNIFIED COMMERCE 2.0</span>
+          <div className="hero-copy animate-slide-in-3d">
+            <span className="hero-badge animate-pulse-3d">UNIFIED COMMERCE 2.0</span>
             <h1 className="hero-title">Bridge the Gap Between Digital Vision and Physical Reality.</h1>
             <p className="hero-description">
               Commerce exactly how you expect it. Real-time availability, dynamic pricing, and hyper-realistic visualization in one unified platform.
@@ -56,7 +56,7 @@ const LandingPage = () => {
             </div>
           </div>
           <div className="hero-visual">
-            <div className="hero-image-wrap">
+            <div className="hero-image-wrap animate-float-3d">
               <img
                 src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&q=80&w=1200"
                 alt="Cityscape"
@@ -111,7 +111,7 @@ const LandingPage = () => {
         <section className="features-section" id="solutions">
           <article className="feature-card feature-inventory" id="inventory">
             <div className="feature-copy">
-              <span className="feature-label">REAL-TIME INVENTORY</span>
+              <span className="feature-label animate-pulse-3d">REAL-TIME INVENTORY</span>
               <h3>Know it’s there before you go.</h3>
               <p>
                 Our edge-sync technology connects your shelf sensors directly to the user's browser with sub-second latency.
