@@ -1,10 +1,78 @@
 import React, { useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 import { toast } from 'react-toastify';
 import './Inventory.css';
 
+// Fix Leaflet marker icons
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+    iconUrl: markerIcon,
+    shadowUrl: markerShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41]
+});
+
+L.Marker.prototype.options.icon = DefaultIcon;
+
+// Helper to pan the map
+const ChangeView = ({ center }) => {
+  const map = useMap();
+  map.setView(center, 13);
+  return null;
+};
+
 const Inventory = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedStore, setSelectedStore] = useState('Market Street Flagship');
+  const [selectedStore, setSelectedStore] = useState(null);
+  const [mapCenter, setMapCenter] = useState([19.0760, 72.8777]); // Mumbai Center
+
+  const stores = [
+    {
+      name: 'Bandra West Flagship',
+      dist: '0.6 km away • 5 min drive',
+      units: '42 units available',
+      status: 'In Stock',
+      statusColor: 'green',
+      position: [19.0600, 72.8360],
+      address: 'Hill Road, Bandra West'
+    },
+    {
+      name: 'Andheri East Hub',
+      dist: '2.4 km away • 15 min drive',
+      units: '3 units remaining',
+      status: 'Low Stock',
+      statusColor: 'yellow',
+      position: [19.1136, 72.8697],
+      address: 'JB Nagar, Andheri East'
+    },
+    {
+      name: 'Kurla Distribution Center',
+      dist: '4.2 km away • 25 min drive',
+      units: 'Restocking in 2 days',
+      status: 'Out of Stock',
+      statusColor: 'red',
+      position: [19.0727, 72.8826],
+      address: 'LBS Marg, Kurla'
+    },
+    {
+      name: 'Colaba Waterfront Outlet',
+      dist: '1.8 km away • 12 min drive',
+      units: '18 units available',
+      status: 'In Stock',
+      statusColor: 'green',
+      position: [18.9067, 72.8147],
+      address: 'Cuffe Parade, Colaba'
+    }
+  ];
+
+  const handleStoreSelect = (store) => {
+    setSelectedStore(store);
+    setMapCenter(store.position);
+  };
 
   const handleReserve = (e, store) => {
     e.stopPropagation();
@@ -15,82 +83,30 @@ const Inventory = () => {
     toast.success(`Items reserved at ${store.name} for 2 hours!`);
   };
 
-  const handleSecondaryAction = (e, store) => {
-    e.stopPropagation();
-    if (store.statusColor === 'red') {
-      toast.success(`Alert set! You'll be notified when ${store.name} restocks.`);
-    } else {
-      toast.info(`Starting navigation to ${store.name}...`);
-    }
-  };
-
-  const stores = [
-    {
-      name: 'Bandra West Flagship',
-      dist: '0.6 km away • 5 min drive',
-      units: '42 units available',
-      status: 'In Stock',
-      statusColor: 'green',
-      location: { top: '25%', left: '55%' }
-    },
-    {
-      name: 'Andheri East Hub',
-      dist: '2.4 km away • 15 min drive',
-      units: '3 units remaining',
-      status: 'Low Stock',
-      statusColor: 'yellow',
-      location: { top: '58%', left: '65%' }
-    },
-    {
-      name: 'Kurla Distribution Center',
-      dist: '4.2 km away • 25 min drive',
-      units: 'Restocking in 2 days',
-      status: 'Out of Stock',
-      statusColor: 'red',
-      location: { top: '43%', left: '82%' }
-    },
-    {
-      name: 'Colaba Waterfront Outlet',
-      dist: '1.8 km away • 12 min drive',
-      units: '18 units available',
-      status: 'In Stock',
-      statusColor: 'green',
-      location: { top: '80%', left: '50%' }
-    }
-  ];
-
   return (
     <div className="inventory-root">
-      {/* ── Sidebar ── */}
       <aside className="inventory-sidebar">
         <div className="sidebar-header">
-          <h3>Real-Time Inventory</h3>
-          <p>Currently viewing: 24 stores in San Francisco area</p>
+          <h3>Live Mapping Inventory</h3>
+          <p>Currently tracking availability across Mumbai Metro</p>
         </div>
 
         <div className="sidebar-search">
           <span className="search-icon">🔍</span>
           <input 
             type="text" 
-            placeholder="Search stores or locations..." 
+            placeholder="Search stores..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-        </div>
-
-        <div className="sidebar-actions">
-          <button className="filter-btn-black" onClick={() => toast.info('Opening filters panel...')}>
-            <span className="icon">≡</span> Filters
-          </button>
-          <button className="sort-btn" onClick={() => toast.info('Changing sort order...')}>Sort by: Closest</button>
         </div>
 
         <div className="store-list">
           {stores.map((store) => (
             <div 
               key={store.name} 
-              className={`store-item-card ${selectedStore === store.name ? 'selected' : ''}`}
-              onClick={() => setSelectedStore(store.name)}
+              className={`store-item-card ${selectedStore?.name === store.name ? 'selected' : ''}`}
+              onClick={() => handleStoreSelect(store)}
             >
               <div className="store-row-top">
                 <div className="store-info">
@@ -110,13 +126,7 @@ const Inventory = () => {
                   className={`reserve-btn ${store.statusColor === 'red' ? 'disabled' : ''}`}
                   onClick={(e) => handleReserve(e, store)}
                 >
-                  {store.statusColor === 'red' ? 'Unavailable' : 'Reserve for 2h'}
-                </button>
-                <button 
-                  className="nav-btn-sm"
-                  onClick={(e) => handleSecondaryAction(e, store)}
-                >
-                   {store.statusColor === 'red' ? '🔔' : '🧭'}
+                  Reserve
                 </button>
               </div>
             </div>
@@ -124,57 +134,25 @@ const Inventory = () => {
         </div>
       </aside>
 
-      {/* ── Map Area ── */}
       <main className="inventory-map-view">
-        {/* Map Background (SVG/Image placeholder) */}
-        <div className="map-canvas">
-          <div className="map-water"></div>
-          <div className="map-grid-lines"></div>
-          
-          {/* Legend */}
-          <div className="map-legend">
-            <div className="legend-title">Inventory Status</div>
-            <div className="legend-item">
-              <span className="dot green"></span> Available
-            </div>
-            <div className="legend-item">
-              <span className="dot yellow"></span> Limited Stock
-            </div>
-            <div className="legend-item">
-              <span className="dot red"></span> Out of Stock
-            </div>
-          </div>
-
-          {/* Map Pins */}
+        <MapContainer center={mapCenter} zoom={12} scrollWheelZoom={true} style={{ height: "100%", width: "100%" }}>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <ChangeView center={mapCenter} />
           {stores.map((store) => (
-            <div 
-              key={store.name} 
-              className={`map-pin-wrap ${selectedStore === store.name ? 'active' : ''}`}
-              style={{ top: store.location.top, left: store.location.left }}
-            >
-              <div className={`map-pin-icon ${store.statusColor}`}>
-                 {store.statusColor === 'green' && '🏬'}
-                 {store.statusColor === 'yellow' && '🏪'}
-                 {store.statusColor === 'red' && '🏭'}
-              </div>
-              <div className="map-pin-label">
-                {store.name.split(' ')[0]} <span className={`dot-sm ${store.statusColor}`}></span>
-              </div>
-            </div>
+            <Marker key={store.name} position={store.position}>
+              <Popup>
+                <div className="map-popup-custom">
+                  <strong>{store.name}</strong>
+                  <p>{store.address}</p>
+                  <span className={`status-text-${store.statusColor}`}>{store.status}</span>
+                </div>
+              </Popup>
+            </Marker>
           ))}
-
-          {/* Map Controls */}
-          <div className="map-controls">
-            <button className="map-ctrl locate" onClick={() => toast.info('Locating current position...')}>🎯</button>
-            <div className="zoom-group">
-              <button className="map-ctrl" onClick={() => toast.info('Zooming in...')}>+</button>
-              <button className="map-ctrl" onClick={() => toast.info('Zooming out...')}>−</button>
-            </div>
-          </div>
-
-          {/* City Label */}
-          <div className="city-label">Mumbai Metro</div>
-        </div>
+        </MapContainer>
       </main>
     </div>
   );

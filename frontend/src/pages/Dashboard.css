@@ -1,7 +1,7 @@
 .dashboard-root {
   background-color: var(--bg-main);
   min-height: calc(100vh - 80px);
-  padding: 3rem 5%;
+  padding: 3rem 3%;
   width: 100%;
   box-sizing: border-box;
 }

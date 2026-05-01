@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
+import { Camera, Upload, X, Image as ImageIcon } from 'lucide-react';
 import { FormInput } from './forms/FormInput';
+import { addLocalProduct } from '../store/productSlice';
+import api from '../services/api';
 import './AddProductModal.css';
 
 const AddProductSchema = Yup.object().shape({
@@ -24,6 +28,10 @@ const AddProductSchema = Yup.object().shape({
 });
 
 const AddProductModal = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch();
+  const fileInputRef = useRef(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  
   if (!isOpen) return null;
 
   const initialValues = {
@@ -35,23 +43,63 @@ const AddProductModal = ({ isOpen, onClose }) => {
     description: '',
   };
 
-  const handleSubmit = (values, { setSubmitting, resetForm }) => {
-    // Simulate API call
-    setTimeout(() => {
-      console.log('New Product:', values);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    try {
+      const newProduct = {
+        ...values,
+        id: Date.now().toString(), // local unique ID
+        _id: Date.now().toString(), // match mongo ID style
+        img: imagePreview || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80',
+        title: values.name, // for dummyjson compatibility
+        price: Number(values.price),
+        stock: Number(values.stock),
+        discountPercentage: 0,
+      };
+
+      // 1. Update Redux for immediate UI reflection
+      dispatch(addLocalProduct(newProduct));
+      
+      // 2. Attempt backend persistence
+      try {
+        await api.post('/products', {
+          ...values,
+          img: imagePreview
+        });
+      } catch (err) {
+        console.warn('Backend persistence failed, showing local only', err);
+      }
+
       toast.success(`${values.name} successfully added to inventory!`);
-      setSubmitting(false);
       resetForm();
+      setImagePreview(null);
       onClose();
-    }, 1000);
+    } catch (error) {
+      toast.error('Failed to add product. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <div className="add-modal-overlay animate-fade-in">
       <div className="add-modal-content animate-slide-up-3d">
         <div className="add-modal-header">
-          <h2>Add New Item</h2>
-          <button className="btn-close-modal" onClick={onClose}>×</button>
+          <div className="title-stack">
+             <h2>Inventory Onboarding</h2>
+             <p>Register a new precision asset to your commerce portal</p>
+          </div>
+          <button className="btn-close-modal" onClick={onClose}><X size={20} /></button>
         </div>
         
         <Formik
@@ -61,52 +109,78 @@ const AddProductModal = ({ isOpen, onClose }) => {
         >
           {({ isSubmitting }) => (
             <Form className="add-product-form">
+              {/* Image Upload Area */}
+              <div className="image-onboarding-area">
+                {imagePreview ? (
+                  <div className="image-preview-container">
+                    <img src={imagePreview} alt="Preview" />
+                    <button type="button" className="btn-remove-img" onClick={() => setImagePreview(null)}>
+                      <X size={14} />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="upload-placeholder" onClick={() => fileInputRef.current.click()}>
+                    <div className="icon-stack">
+                      <ImageIcon className="icon-main" size={32} />
+                      <Camera className="icon-sub" size={16} />
+                    </div>
+                    <strong>Upload Product Visuals</strong>
+                    <p>Click to open camera or browse files</p>
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      capture="environment"
+                      hidden 
+                      ref={fileInputRef}
+                      onChange={handleImageChange}
+                    />
+                  </div>
+                )}
+              </div>
+
               <div className="form-row">
-                <FormInput name="name" label="Product Name" placeholder="e.g. Nike Air Max" full />
+                <FormInput name="name" label="Product Name" placeholder="e.g. Premium Tech Blazer" full />
               </div>
 
               <div className="form-row split">
-                <FormInput name="price" label="Price (₹)" type="number" placeholder="e.g. 4500" />
-                <FormInput name="stock" label="Initial Stock" type="number" placeholder="e.g. 50" />
+                <FormInput name="price" label="Unit Price (₹)" type="number" placeholder="4500" />
+                <FormInput name="stock" label="Initial Stock" type="number" placeholder="50" />
               </div>
 
               <div className="form-row split">
                 <div className="form-group full">
-                  <label htmlFor="category">Category</label>
-                  <FormInput as="select" name="category" id="category" className="form-select" full>
-                    <option value="">Select a category</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="clothing">Clothing & Fashion</option>
-                    <option value="home">Home & Furniture</option>
-                    <option value="sports">Sports & Outdoors</option>
+                  <label htmlFor="category">Market Category</label>
+                  <FormInput as="select" name="category" id="category" full>
+                    <option value="">Select Category</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Clothing">Clothing & Fashion</option>
+                    <option value="Home">Home & Furniture</option>
+                    <option value="Sports">Sports & Outdoors</option>
                   </FormInput>
                 </div>
                 
                 <div className="form-group full">
-                  <label htmlFor="size">Size</label>
-                  <FormInput as="select" name="size" id="size" className="form-select" full>
-                    <option value="">Select a size</option>
-                    <option value="XS">Extra Small (XS)</option>
-                    <option value="S">Small (S)</option>
-                    <option value="M">Medium (M)</option>
-                    <option value="L">Large (L)</option>
-                    <option value="XL">Extra Large (XL)</option>
-                    <option value="OS">One Size (OS)</option>
+                  <label htmlFor="size">Fulfillment Size</label>
+                  <FormInput as="select" name="size" id="size" full>
+                    <option value="">Select Size</option>
+                    <option value="XS">XS</option>
+                    <option value="S">Small</option>
+                    <option value="M">Medium</option>
+                    <option value="L">Large</option>
+                    <option value="XL">XL</option>
+                    <option value="OS">One Size</option>
                   </FormInput>
                 </div>
               </div>
 
               <div className="form-row">
-                <div className="form-group full">
-                  <label htmlFor="description">Product Description</label>
-                  <FormInput as="textarea" name="description" id="description" rows="3" placeholder="Describe your product..." full />
-                </div>
+                <FormInput as="textarea" name="description" label="Technical Description" rows="2" placeholder="Detail the materials and features..." full />
               </div>
 
               <div className="form-actions">
                 <button type="button" className="btn-cancel" onClick={onClose}>Cancel</button>
                 <button type="submit" className="btn-submit" disabled={isSubmitting}>
-                  {isSubmitting ? 'Adding...' : 'Add Product'}
+                  {isSubmitting ? 'Syncing...' : 'Register Asset'}
                 </button>
               </div>
             </Form>
