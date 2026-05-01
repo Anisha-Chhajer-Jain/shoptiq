@@ -18,6 +18,7 @@ const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Inventory = lazy(() => import('./pages/Inventory'));
 const AIStyling = lazy(() => import('./pages/AIStyling'));
 const GroupBuy = lazy(() => import('./pages/GroupBuy'));
+const GroupBuyDetail = lazy(() => import('./pages/GroupBuyDetail'));
 const Community = lazy(() => import('./pages/Community'));
 const ProductDetail = lazy(() => import('./pages/ProductDetail'));
 const Cart = lazy(() => import('./pages/Cart'));
@@ -41,6 +42,8 @@ const PageLoader = () => (
 function App() {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const themeMode = useSelector((state) => state.ui?.theme || 'light');
+  const cartItems = useSelector((state) => state.cart?.items || []);
+  const cartCount = cartItems.reduce((acc, item) => acc + item.qty, 0);
   const dispatch = useDispatch();
   const [isBotOpen, setIsBotOpen] = useState(false);
 
@@ -92,7 +95,7 @@ function App() {
       {isAuthenticated && (
         <Navbar 
           onLogout={handleLogout} 
-          cartCount={0} // To be connected to a cart slice later
+          cartCount={cartCount} 
         />
       )}
       
@@ -114,6 +117,7 @@ function App() {
                   <Route path="/inventory" element={<Inventory />} />
                   <Route path="/aistyling" element={<AIStyling />} />
                   <Route path="/groupbuy" element={<GroupBuy />} />
+                  <Route path="/groupbuy/:id" element={<GroupBuyDetail />} />
                   <Route path="/community" element={<Community />} />
                   <Route path="/product/:id" element={<ProductDetail />} />
                   <Route path="/cart" element={<Cart />} />

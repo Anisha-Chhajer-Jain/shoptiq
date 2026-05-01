@@ -22,14 +22,18 @@
   --border: #e2e8f0;        /* Slate 200 - More visible border */
   --border-hover: #cbd5e1;  /* Slate 300 */
   
-  /* ── Shadows ── */
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  /* ── Shadows & 3D Effects ── */
+  --shadow-sm: 0 2px 4px 0 rgb(0 0 0 / 0.05), inset 0 -1px 0 rgba(0,0,0,0.05);
+  --shadow-md: 0 6px 12px -2px rgb(0 0 0 / 0.1), 0 3px 6px -3px rgb(0 0 0 / 0.1), inset 0 -2px 0 rgba(0,0,0,0.1);
+  --shadow-lg: 0 15px 25px -5px rgb(0 0 0 / 0.15), 0 8px 10px -6px rgb(0 0 0 / 0.1), inset 0 -3px 0 rgba(0,0,0,0.1);
+  --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25), inset 0 -4px 0 rgba(0,0,0,0.15);
+  --shadow-3d: 0 12px 24px rgba(0,0,0,0.15), 0 8px 8px rgba(0,0,0,0.1), inset 0 -4px 0 rgba(0,0,0,0.1);
+  --shadow-3d-hover: 0 20px 40px rgba(0,0,0,0.2), 0 12px 12px rgba(0,0,0,0.15), inset 0 -6px 0 rgba(0,0,0,0.15);
+  --shadow-3d-active: 0 4px 8px rgba(0,0,0,0.15), 0 2px 2px rgba(0,0,0,0.1), inset 0 -1px 0 rgba(0,0,0,0.2);
   
   /* ── Transitions ── */
-  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-bounce: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 :root.dark {
@@ -78,13 +82,51 @@ h1, h2, h3, h4, h5, h6 {
 button {
   cursor: pointer;
   font-family: inherit;
-  transition: var(--transition);
+  transition: var(--transition-bounce);
+  transform-style: preserve-3d;
+}
+
+button:active {
+  transform: translateY(2px) scale(0.97);
+  box-shadow: var(--shadow-3d-active);
 }
 
 a {
   text-decoration: none;
   color: inherit;
-  transition: var(--transition);
+  transition: var(--transition-bounce);
+  display: inline-block;
+}
+
+/* ── Global Animations ── */
+@keyframes float3D {
+  0% { transform: translateY(0) rotateX(0) rotateY(0); }
+  33% { transform: translateY(-10px) rotateX(2deg) rotateY(-2deg); }
+  66% { transform: translateY(5px) rotateX(-2deg) rotateY(2deg); }
+  100% { transform: translateY(0) rotateX(0) rotateY(0); }
+}
+
+@keyframes pulse3D {
+  0% { transform: scale(1) translateZ(0); box-shadow: var(--shadow-md); }
+  50% { transform: scale(1.05) translateZ(20px); box-shadow: var(--shadow-xl); }
+  100% { transform: scale(1) translateZ(0); box-shadow: var(--shadow-md); }
+}
+
+@keyframes slideIn3D {
+  from { opacity: 0; transform: perspective(1000px) rotateX(-15deg) translateY(30px) translateZ(-50px); }
+  to { opacity: 1; transform: perspective(1000px) rotateX(0) translateY(0) translateZ(0); }
+}
+
+.animate-float-3d {
+  animation: float3D 6s ease-in-out infinite;
+}
+
+.animate-pulse-3d {
+  animation: pulse3D 3s infinite;
+}
+
+.animate-slide-in-3d {
+  animation: slideIn3D 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 /* ── Layout ── */
