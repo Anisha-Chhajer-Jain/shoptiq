@@ -17,6 +17,178 @@
 
 ---
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 📌 Problem Statement
+
+Traditional e-commerce platforms operate on fixed pricing models and lack personalization, real-time interaction, and advanced visualization tools.  
+Users often face uncertainty in product selection, pricing fairness, and purchase confidence.
+
+---
+
+# 💡 Solution
+
+Shoptiq solves these challenges by introducing:
+- Dynamic pricing and negotiation system  
+- Group buying for bulk discounts  
+- AI-powered recommendations  
+- Modern UI/UX with real-time interactions  
+
+This creates a smarter, more interactive, and cost-effective shopping experience.
+
+---
+
+# ✨ Features
+
+### 🛒 Core Features
+- Product browsing with real-time data
+- Detailed product view with buy option
+- Add to cart & checkout flow
+- Authentication (Login/Register with JWT)
+
+### 💬 Advanced Features
+- Price negotiation system
+- Group buying pools with tier pricing
+- Live chat (Socket-based)
+
+### 🤖 Smart Features
+- AI size recommendation
+- AR-based visualization (UI simulation)
+
+### 📦 Admin / Inventory
+- Add new product
+- Inventory management
+- Order tracking system
+
+### 🎨 UI/UX
+- 3D animations & transitions
+- Fully responsive design
+- Smooth page navigation
+
+---
+
+# 🛠️ Tech Stack
+
+### Frontend
+- React (Vite)
+- Redux Toolkit
+- React Router DOM
+- CSS3 (Animations & 3D Effects)
+- Axios
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JWT Authentication
+- Socket.io
+
+### Deployment
+- Vercel (Frontend)
+- Render (Backend)
+
+---
+
+# 📂 Folder Structure
+
+
+shoptiq/
+│
+├── frontend/
+│ ├── src/
+│ │ ├── components/
+│ │ ├── pages/
+│ │ ├── redux/
+│ │ ├── assets/
+│ │ └── App.jsx
+│ └── package.json
+│
+├── backend/
+│ ├── config/
+│ ├── controllers/
+│ ├── models/
+│ ├── routes/
+│ ├── middleware/
+│ └── server.js
+│
+└── README.md
+
+
+---
+
+# 🖼️ Project Screenshots
+
+> Add screenshots here before final submission
+
+- Home Page  
+- Product Page  
+- Cart Page  
+- Dashboard  
+- Inventory Panel  
+
+---
+
+# 🔍 SEO Implementation
+
+- Meta tags added (title, description)
+- Proper heading structure (H1, H2, etc.)
+- Optimized images and alt attributes
+- Clean URL routing
+- Fast loading with Vite optimization
+
+---
+
+# ✅ Coding Gita Requirements Checklist
+
+- ✔ Complete README with all links  
+- ✔ Live deployed frontend & backend  
+- ✔ Postman API documentation  
+- ✔ Proper folder structure  
+- ✔ SEO implemented  
+- ✔ Features aligned with official README  
+- ✔ Clean and structured codebase  
+
+---
+
+# 🚀 Getting Started
+
+### 1. Clone Repository
+```bash
+git clone https://github.com/your-username/shoptiq.git
+cd shoptiq
+2. Backend Setup
+cd backend
+npm install
+# Create .env file with:
+# PORT=5000
+# MONGO_URI=your_mongo_uri
+# JWT_SECRET=your_secret
+npm run dev
+3. Frontend Setup
+cd frontend
+npm install
+npm run dev
+
+
+
+
+
+
+
 ## ✨ Core Pillars of Shoptiq
 
 ### 💬 1. Dynamic Negotiation Hub
