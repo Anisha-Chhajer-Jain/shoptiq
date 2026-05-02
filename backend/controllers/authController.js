@@ -67,12 +67,23 @@ const googleAuth = async (req, res, next) => {
   try {
     const { token, role } = req.body;
 
+    if (!token) {
+      console.error('[Google Auth] No token provided');
+      return res.status(400).json({ message: 'No token provided' });
+    }
+
+    console.log('[Google Auth] Fetching user info with token...');
+
     // Fetch user info from Google using the access token
     const { data } = await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo`, {
       headers: { Authorization: `Bearer ${token}` }
+    }).catch(err => {
+      console.error('[Google Auth] Google API Error:', err.response?.data || err.message);
+      throw new Error('Invalid Google token');
     });
 
-    const { email, name, sub: googleId } = data;
+    const { email, name, picture, sub: googleId } = data;
+    console.log(`[Google Auth] Success for email: ${email}`);
 
     let user = await User.findOne({ email });
 
@@ -87,10 +98,10 @@ const googleAuth = async (req, res, next) => {
       });
     } else {
       // Create new user for Google login
-      // Generate a random password since it's required by the model
+      console.log(`[Google Auth] Creating new user: ${email}`);
       const randomPassword = Math.random().toString(36).slice(-10);
       user = await User.create({
-        name,
+        name: name || email.split('@')[0],
         email,
         password: randomPassword,
         role: role || 'buyer',
@@ -105,8 +116,8 @@ const googleAuth = async (req, res, next) => {
       });
     }
   } catch (error) {
-    res.status(401);
-    next(new Error('Google authentication failed'));
+    console.error('[Google Auth] Catch Error:', error.message);
+    res.status(401).json({ message: error.message || 'Google authentication failed' });
   }
 };
 
