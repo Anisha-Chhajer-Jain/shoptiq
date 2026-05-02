@@ -30,54 +30,91 @@
 
 
 
+# 💎 Shoptiq — Bridging the Gaps in Modern Commerce
 
+> **"From Expectation to Reality — Seamlessly."**  
+A full-stack e-commerce platform designed to eliminate critical gaps in online shopping through intelligent systems, real-time data, and enhanced user experience.
 
+---
+
+# 🔗 Live Deployment & Resources
+
+| Resource | Status | Link |
+|---|---|---|
+| 🌐 **Frontend Live** | ✅ Deployed (Vercel) | https://shoptiq.vercel.app/ |
+| ⚙️ **Backend API** | ✅ Deployed (Render) | https://shoptiq-00.onrender.com |
+| 🎨 **Figma Design** | ✅ Available | https://www.figma.com/design/XohCkUjH1tSumFDZ7uYasO/figma |
+| 📮 **Postman Docs** | ✅ Available | https://documenter.getpostman.com/view/50840681/2sBXqKof5Z |
+| 🎥 **YouTube Demo** | ⏳ Add Link | https://youtube.com/your-link-here |
+
+---
 
 # 📌 Problem Statement
 
-Traditional e-commerce platforms operate on fixed pricing models and lack personalization, real-time interaction, and advanced visualization tools.  
-Users often face uncertainty in product selection, pricing fairness, and purchase confidence.
+Modern e-commerce platforms suffer from **three critical gaps** that negatively impact user trust and purchasing decisions:
+
+### 📦 1. Availability Gap  
+Products marked as **"In Stock" online** often turn out to be **unavailable in physical stores**, causing frustration and wasted effort for users.
+
+### 🏷️ 2. Pricing Gap  
+Online platforms follow **static pricing models**, ignoring:
+- Local store discounts  
+- Bulk purchase benefits  
+- Customer loyalty advantages  
+
+This results in missed opportunities for both buyers and sellers.
+
+### 👁️ 3. Expectation Gap  
+The **digital representation of products** (images/videos) often does not match the **real-world experience**, leading to dissatisfaction and returns.
+
+---
+
+## ⚠️ Combined Impact
+
+These three gaps together create:
+- Lack of trust in online platforms  
+- Poor purchase confidence  
+- Increased return rates  
+- Reduced customer satisfaction  
 
 ---
 
 # 💡 Solution
 
-Shoptiq solves these challenges by introducing:
-- Dynamic pricing and negotiation system  
-- Group buying for bulk discounts  
-- AI-powered recommendations  
-- Modern UI/UX with real-time interactions  
+Shoptiq is designed to **bridge all three gaps** through an integrated approach:
 
-This creates a smarter, more interactive, and cost-effective shopping experience.
+- **Real-time inventory system** to ensure accurate availability  
+- **Dynamic pricing & negotiation system** for fair pricing  
+- **AI & visual tools** to match expectations with reality  
 
 ---
 
-# ✨ Features
+# ✨ Key Features
 
-### 🛒 Core Features
-- Product browsing with real-time data
-- Detailed product view with buy option
-- Add to cart & checkout flow
-- Authentication (Login/Register with JWT)
+### 📦 Inventory & Availability
+- Real-time stock updates  
+- Accurate product availability tracking  
+- Integrated backend inventory system  
 
-### 💬 Advanced Features
-- Price negotiation system
-- Group buying pools with tier pricing
-- Live chat (Socket-based)
+### 🏷️ Smart Pricing System
+- Price negotiation feature  
+- Group buying for bulk discounts  
+- Dynamic pricing logic  
 
-### 🤖 Smart Features
-- AI size recommendation
-- AR-based visualization (UI simulation)
+### 👁️ Experience Enhancement
+- AI-based size recommendation  
+- AR-based product visualization (UI simulation)  
+- Community-based product comparison  
 
-### 📦 Admin / Inventory
-- Add new product
-- Inventory management
-- Order tracking system
+### 🛒 Core E-commerce
+- Product listing & search  
+- Add to cart & checkout  
+- Secure authentication (JWT)  
 
-### 🎨 UI/UX
-- 3D animations & transitions
-- Fully responsive design
-- Smooth page navigation
+### 📊 Admin & Management
+- Add / update products  
+- Inventory dashboard  
+- Order tracking  
 
 ---
 
@@ -87,7 +124,7 @@ This creates a smarter, more interactive, and cost-effective shopping experience
 - React (Vite)
 - Redux Toolkit
 - React Router DOM
-- CSS3 (Animations & 3D Effects)
+- CSS3 (Animations & Responsive UI)
 - Axios
 
 ### Backend
@@ -100,45 +137,6 @@ This creates a smarter, more interactive, and cost-effective shopping experience
 ### Deployment
 - Vercel (Frontend)
 - Render (Backend)
-
----
-
-# 📂 Folder Structure
-
-
-shoptiq/
-│
-├── frontend/
-│ ├── src/
-│ │ ├── components/
-│ │ ├── pages/
-│ │ ├── redux/
-│ │ ├── assets/
-│ │ └── App.jsx
-│ └── package.json
-│
-├── backend/
-│ ├── config/
-│ ├── controllers/
-│ ├── models/
-│ ├── routes/
-│ ├── middleware/
-│ └── server.js
-│
-└── README.md
-
-
----
-
-# 🖼️ Project Screenshots
-
-> Add screenshots here before final submission
-
-- Home Page  
-- Product Page  
-- Cart Page  
-- Dashboard  
-- Inventory Panel  
 
 ---
 
@@ -164,91 +162,22 @@ shoptiq/
 
 ---
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 🚀 Getting Started
 
-### 1. Clone Repository
-```bash
-git clone https://github.com/your-username/shoptiq.git
-cd shoptiq
-2. Backend Setup
-cd backend
-npm install
-# Create .env file with:
-# PORT=5000
-# MONGO_URI=your_mongo_uri
-# JWT_SECRET=your_secret
-npm run dev
-3. Frontend Setup
-cd frontend
-npm install
-npm run dev
-
-
-
-
-
-
-
-## ✨ Core Pillars of Shoptiq
-
-### 💬 1. Dynamic Negotiation Hub
-Unlike traditional "static price" platforms, Shoptiq allows buyers to initiate live negotiations for volume pricing. 
-- **Make an Offer**: Negotiate prices directly from the product page.
-- **Offer Management**: Manage active negotiations in the dedicated Hub.
-- **B2B Ready**: Tailored for enterprise quotes and custom orders over ₹50k.
-
-### 🤝 2. Collective Group Buy Pools
-A dedicated system for unlocking massive bulk discounts through community purchasing power.
-- **Tiered Discounts**: Reach funding milestones to unlock Tier 1, Tier 2, and Enterprise pricing.
-- **Live Pool Chat**: Discuss the product with other buyers in real-time before committing.
-- **Volume Savings**: Your card is only charged when the pool closes at the guaranteed lowest price.
-
-### 🤖 3. AI Size Finder & AR Styling
-Empowering buyers to make confident purchases without the guesswork.
-- **AI Recommendation Engine**: Inputs like Height and Weight instantly calculate your tailored fit.
-- **AR Try-On**: Visualize how apparel and products fit into your lifestyle.
-- **Expectation Comparison Wall**: A community gallery comparing catalog studio images against real-world user photos.
-
-### 💳 4. Secure Cart & Global Data
-- **DummyJSON Integration**: Fully dynamic storefront powered by a live global API for endless product discovery.
-- **Smart Cart Integration**: Global Redux state management dynamically calculates bulk discounts and shipping credits.
-- **Secure Checkout**: Enterprise-tier checkout flow backed by 256-bit AES Encryption UI.
-
 ---
-
-## 🛠️ Technical Architecture
-
-### **Frontend**
-- **Framework**: React (Vite)
-- **Styling**: Vanilla CSS with Advanced 3D Transforms (Glassmorphism & Keyframes)
-- **State Management**: Redux Toolkit (`authSlice`, `cartSlice`)
-- **Routing**: React Router DOM (Lazy Loading & Suspense)
-- **External Data**: Axios & DummyJSON API
-
-### **Backend**
-- **Runtime**: Node.js & Express
-- **Database**: MongoDB (Mongoose ODM)
-- **Authentication**: JWT (JSON Web Tokens) with LocalStorage fallback
-- **Environment**: Dotenv for secure config management
-
----
-
-## 📂 Project Roadmap
-
-- [x] **Phase 1: UI Foundation** — Premium 3D-styled components and responsive layout.
-- [x] **Phase 2: Global API** — Hooking up DummyJSON across Dashboard, Search, and Community.
-- [x] **Phase 3: State Management** — Redux cart implementation and active negotiations.
-- [x] **Phase 4: Group Buys** — Complex tiered discounting and live chat logic.
-- [x] **Phase 5: Authentication** — Secure Buyer & Admin Roles with JWT integration.
-- [ ] **Phase 6: Deployment** — Vercel & Render Integration.
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v18+)
-- MongoDB Atlas Account
 
 ### Installation
 
