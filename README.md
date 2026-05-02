@@ -4,14 +4,16 @@
 > A premium, full-stack enterprise e-commerce ecosystem built for dynamic pricing, visual fidelity, and collective bargaining.
 
 ---
-
 ## 🔗 Live Deployment & Resources
 
 | Resource | Status | Link |
 |---|---|---|
-| 🌐 **Frontend Live** | Pending Deployment | [Deploy on Vercel](#) |
-| ⚙️ **Backend API** | Pending Deployment | [Deploy on Render](#) |
-| 🎨 **UI Design** | 3D Interactive UI | Local CSS Architecture |
+| 🌐 **Frontend Live** | Deployed (Vercel) | [https://shoptiq.vercel.app/](https://shoptiq.vercel.app/) |
+| ⚙️ **Backend API** | Deployed (Render) | [https://shoptiq-00.onrender.com](https://shoptiq-00.onrender.com) |
+| 🎨 **Figma Design** | Original Assets | [View on Figma](https://www.figma.com/design/XohCkUjH1tSumFDZ7uYasO/figma?node-id=28-575&t=bXAxnazAwFbD3M3e-1) |
+| 🖼️ **Figma Prototype** | Interaction Map | [Open Prototype](https://www.figma.com/proto/XohCkUjH1tSumFDZ7uYasO/figma?node-id=971-4177&p=f&viewport=52%2C1906%2C0.02&t=UHE18ySKmoTfRVlx-1&scaling=contain&content-scaling=fixed&starting-point-node-id=971%3A4177&show-proto-sidebar=1&page-id=28%3A575) |
+| 📮 **Postman Docs** | API Reference | [View Documentation](https://documenter.getpostman.com/view/50840681/2sBXqKof5Z) |
+| 🎥 **YouTube Demo** | Video Walkthrough | [Watch Presentation](https://youtube.com/your-link-here) |
 
 ---
 
