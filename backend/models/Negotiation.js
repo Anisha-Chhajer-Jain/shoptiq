@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const negotiationSchema = mongoose.Schema(
+const negotiationSchema = new mongoose.Schema(
   {
     productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
     buyer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -11,7 +11,7 @@ const negotiationSchema = mongoose.Schema(
       default: 'NEW',
     },
     lastOfferPrice: { type: Number },
-    agreedPrice: { type: Number, default: 0 },
+    agreedPrice: { type: Number },
     quantity: { type: Number, default: 1 },
     lastMessage: { type: String },
     lastMessageAt: { type: Date, default: Date.now },
@@ -20,8 +20,6 @@ const negotiationSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-// Compound index for fast lookups
 negotiationSchema.index({ productId: 1, buyer: 1, seller: 1 }, { unique: true });
 
-const Negotiation = mongoose.model('Negotiation', negotiationSchema);
-module.exports = Negotiation;
+module.exports = mongoose.model('Negotiation', negotiationSchema);
