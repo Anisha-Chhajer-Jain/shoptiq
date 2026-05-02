@@ -356,6 +356,11 @@ const Negotiation = require('./models/Negotiation');
 
 const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 
+// Route Imports
+const authRoutes = require('./routes/authRoutes');
+const productRoutes = require('./routes/productRoutes');
+const negotiationRoutes = require('./routes/negotiationRoutes');
+
 // Connect DB
 connectDB();
 
@@ -363,8 +368,16 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000', 'http://127.0.0.1:5173', 'http://127.0.0.1:5174', 'http://127.0.0.1:3000'],
+  credentials: true,
+}));
 app.use(express.json());
+
+// ── Auth Routes ──
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/negotiation', negotiationRoutes);
 
 /* =========================================================
    🔹 MESSAGE APIs
