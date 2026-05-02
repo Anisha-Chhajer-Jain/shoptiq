@@ -11,7 +11,7 @@ const Product = require('./models/Product');
 const Negotiation = require('./models/Negotiation');
 const { startNegotiationTimeoutHandler } = require('./utils/negotiationTimeoutHandler');
 
-// Route imports
+
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const negotiationRoutes = require('./routes/negotiationRoutes');
