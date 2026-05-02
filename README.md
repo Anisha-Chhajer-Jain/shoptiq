@@ -13,70 +13,139 @@
 | 🎨 **Figma Design** | Original Assets | [View on Figma](https://www.figma.com/design/XohCkUjH1tSumFDZ7uYasO/figma?node-id=28-575&t=bXAxnazAwFbD3M3e-1) |
 | 🖼️ **Figma Prototype** | Interaction Map | [Open Prototype](https://www.figma.com/proto/XohCkUjH1tSumFDZ7uYasO/figma?node-id=971-4177&p=f&viewport=52%2C1906%2C0.02&t=UHE18ySKmoTfRVlx-1&scaling=contain&content-scaling=fixed&starting-point-node-id=971%3A4177&show-proto-sidebar=1&page-id=28%3A575) |
 | 📮 **Postman Docs** | API Reference | [View Documentation](https://documenter.getpostman.com/view/50840681/2sBXqKof5Z) |
-| 🎥 **YouTube Demo** | Video Walkthrough | [Watch Presentation](https://youtube.com/your-link-here) |
+| 🎥 **YouTube Demo** | Video Walkthrough | [Watch Presentation](https://youtu.be/-E1CPUZNrhY) |
 
 ---
 
-## ✨ Core Pillars of Shoptiq
+# 📌 Problem Statement
 
-### 💬 1. Dynamic Negotiation Hub
-Unlike traditional "static price" platforms, Shoptiq allows buyers to initiate live negotiations for volume pricing. 
-- **Make an Offer**: Negotiate prices directly from the product page.
-- **Offer Management**: Manage active negotiations in the dedicated Hub.
-- **B2B Ready**: Tailored for enterprise quotes and custom orders over ₹50k.
+Modern e-commerce platforms suffer from **three critical gaps** that negatively impact user trust and purchasing decisions:
 
-### 🤝 2. Collective Group Buy Pools
-A dedicated system for unlocking massive bulk discounts through community purchasing power.
-- **Tiered Discounts**: Reach funding milestones to unlock Tier 1, Tier 2, and Enterprise pricing.
-- **Live Pool Chat**: Discuss the product with other buyers in real-time before committing.
-- **Volume Savings**: Your card is only charged when the pool closes at the guaranteed lowest price.
+### 📦 1. Availability Gap  
+Products marked as **"In Stock" online** often turn out to be **unavailable in physical stores**, causing frustration and wasted effort for users.
 
-### 🤖 3. AI Size Finder & AR Styling
-Empowering buyers to make confident purchases without the guesswork.
-- **AI Recommendation Engine**: Inputs like Height and Weight instantly calculate your tailored fit.
-- **AR Try-On**: Visualize how apparel and products fit into your lifestyle.
-- **Expectation Comparison Wall**: A community gallery comparing catalog studio images against real-world user photos.
+### 🏷️ 2. Pricing Gap  
+Online platforms follow **static pricing models**, ignoring:
+- Local store discounts  
+- Bulk purchase benefits  
+- Customer loyalty advantages  
 
-### 💳 4. Secure Cart & Global Data
-- **DummyJSON Integration**: Fully dynamic storefront powered by a live global API for endless product discovery.
-- **Smart Cart Integration**: Global Redux state management dynamically calculates bulk discounts and shipping credits.
-- **Secure Checkout**: Enterprise-tier checkout flow backed by 256-bit AES Encryption UI.
+This results in missed opportunities for both buyers and sellers.
+
+### 👁️ 3. Expectation Gap  
+The **digital representation of products** (images/videos) often does not match the **real-world experience**, leading to dissatisfaction and returns.
 
 ---
 
-## 🛠️ Technical Architecture
+## ⚠️ Combined Impact
 
-### **Frontend**
-- **Framework**: React (Vite)
-- **Styling**: Vanilla CSS with Advanced 3D Transforms (Glassmorphism & Keyframes)
-- **State Management**: Redux Toolkit (`authSlice`, `cartSlice`)
-- **Routing**: React Router DOM (Lazy Loading & Suspense)
-- **External Data**: Axios & DummyJSON API
-
-### **Backend**
-- **Runtime**: Node.js & Express
-- **Database**: MongoDB (Mongoose ODM)
-- **Authentication**: JWT (JSON Web Tokens) with LocalStorage fallback
-- **Environment**: Dotenv for secure config management
+These three gaps together create:
+- Lack of trust in online platforms  
+- Poor purchase confidence  
+- Increased return rates  
+- Reduced customer satisfaction  
 
 ---
 
-## 📂 Project Roadmap
+# 💡 Solution
 
-- [x] **Phase 1: UI Foundation** — Premium 3D-styled components and responsive layout.
-- [x] **Phase 2: Global API** — Hooking up DummyJSON across Dashboard, Search, and Community.
-- [x] **Phase 3: State Management** — Redux cart implementation and active negotiations.
-- [x] **Phase 4: Group Buys** — Complex tiered discounting and live chat logic.
-- [x] **Phase 5: Authentication** — Secure Buyer & Admin Roles with JWT integration.
-- [ ] **Phase 6: Deployment** — Vercel & Render Integration.
+Shoptiq is designed to **bridge all three gaps** through an integrated approach:
+
+- **Real-time inventory system** to ensure accurate availability  
+- **Dynamic pricing & negotiation system** for fair pricing  
+- **AI & visual tools** to match expectations with reality  
 
 ---
 
-## 🚀 Getting Started
+# ✨ Key Features
 
-### Prerequisites
-- Node.js (v18+)
-- MongoDB Atlas Account
+### 📦 Inventory & Availability
+- Real-time stock updates  
+- Accurate product availability tracking  
+- Integrated backend inventory system  
+
+### 🏷️ Smart Pricing System
+- Price negotiation feature  
+- Group buying for bulk discounts  
+- Dynamic pricing logic  
+
+### 👁️ Experience Enhancement
+- AI-based size recommendation  
+- AR-based product visualization (UI simulation)  
+- Community-based product comparison  
+
+### 🛒 Core E-commerce
+- Product listing & search  
+- Add to cart & checkout  
+- Secure authentication (JWT)  
+
+### 📊 Admin & Management
+- Add / update products  
+- Inventory dashboard  
+- Order tracking  
+
+---
+
+# 🛠️ Tech Stack
+
+### Frontend
+- React (Vite)
+- Redux Toolkit
+- React Router DOM
+- CSS3 (Animations & Responsive UI)
+- Axios
+
+### Backend
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JWT Authentication
+- Socket.io
+
+### Deployment
+- Vercel (Frontend)
+- Render (Backend)
+
+---
+
+# 🔍 SEO Implementation
+
+- Meta tags added (title, description)
+- Proper heading structure (H1, H2, etc.)
+- Optimized images and alt attributes
+- Clean URL routing
+- Fast loading with Vite optimization
+
+---
+
+# ✅ Coding Gita Requirements Checklist
+
+- ✔ Complete README with all links  
+- ✔ Live deployed frontend & backend  
+- ✔ Postman API documentation  
+- ✔ Proper folder structure  
+- ✔ SEO implemented  
+- ✔ Features aligned with official README  
+- ✔ Clean and structured codebase  
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 🚀 Getting Started
+
+---
 
 ### Installation
 
