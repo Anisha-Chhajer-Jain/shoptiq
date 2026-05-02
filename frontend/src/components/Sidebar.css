@@ -70,3 +70,18 @@
   .sidebar-header-hub-top, .item-label { display: none; }
   .active-curve { left: -0.5rem; }
 }
+
+.service-sidebar-btn {
+  border-top: 1px solid var(--border) !important;
+  padding-top: 1.5rem !important;
+}
+
+.logout-sidebar-btn {
+  color: #ef4444 !important;
+  margin-top: auto;
+}
+
+.logout-sidebar-btn:hover {
+  background: #fef2f2 !important;
+  color: #dc2626 !important;
+}
