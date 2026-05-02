@@ -73,11 +73,11 @@ const Dashboard = () => {
             {NEGOTIATIONS.map((neg) => (
               <div key={neg.id} className="neg-item-pro">
                 <div className="neg-info">
-                  <strong>{neg.product}</strong>
-                  <p>Current Bid: <span className="blue">₹{neg.currentBid}</span></p>
+                  <strong>{neg.name}</strong>
+                  <p>Asking: ₹{neg.asking.toLocaleString()} • Bid: <span className="blue">₹{neg.bid.toLocaleString()}</span></p>
                 </div>
                 <div className="neg-status-row">
-                   <span className={`status-tag ${neg.status === 'New Offer' ? 'offer' : 'waiting'}`}>{neg.status.toUpperCase()}</span>
+                   <span className={`status-tag ${neg.type}`}>{neg.status}</span>
                    <button className="btn-manage-pro" onClick={() => navigate('/negotiation')}>MANAGE</button>
                 </div>
               </div>
@@ -94,14 +94,14 @@ const Dashboard = () => {
             {GROUP_BUYS.map((pool) => (
               <div key={pool.id} className="gb-item-pro" onClick={() => navigate(`/groupbuy/${pool.id}`)}>
                 <div className="gb-img-mini" style={{ backgroundImage: `url(${pool.img})` }}>
-                  <span className="gb-discount-pro">{pool.discount} OFF</span>
+                  <span className="gb-discount-pro">{pool.discount}</span>
                 </div>
                 <div className="gb-details-pro">
                   <strong>{pool.name}</strong>
                   <div className="gb-bar-pro">
                     <div className="fill" style={{ width: `${pool.progress}%` }}></div>
                   </div>
-                  <p>{pool.participants} Joined • {pool.timeLeft} Left</p>
+                  <p>{pool.backers} backers • {pool.needed} more needed</p>
                 </div>
               </div>
             ))}
@@ -125,7 +125,7 @@ const Dashboard = () => {
           {localProducts.map((product) => (
             <div key={product.id} className="p-card-pro animate-fade-in" onClick={() => navigate(`/product/${product.id}`)}>
               <div className="p-img-pro">
-                <img src={product.img} alt={product.name} />
+                <img src={product.image || product.img} alt={product.name} />
                 <span className="p-stock-pro in-stock">NEW ASSET</span>
                 <button className="p-add-pro" onClick={(e) => { 
                    e.stopPropagation(); 
@@ -133,7 +133,7 @@ const Dashboard = () => {
                      id: product.id, 
                      name: product.name, 
                      price: product.price, 
-                     img: product.img, 
+                     img: product.image || product.img, 
                      discount: 0 
                    }));
                    toast.success(`${product.name} added to cart!`);
@@ -194,7 +194,7 @@ const Dashboard = () => {
           {dbProducts.map((product) => (
             <div key={product._id} className="p-card-pro" onClick={() => navigate(`/product/${product._id}`)}>
               <div className="p-img-pro">
-                <img src={product.img || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80'} alt={product.name} />
+                <img src={product.image || product.img || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80'} alt={product.name} />
                 <span className={`p-stock-pro in-stock`}>IN STOCK</span>
                 <button className="p-add-pro" onClick={(e) => { 
                    e.stopPropagation(); 
@@ -202,7 +202,7 @@ const Dashboard = () => {
                      id: product._id, 
                      name: product.name, 
                      price: product.price, 
-                     img: product.img || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80', 
+                     img: product.image || product.img || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80', 
                      discount: 0 
                    }));
                    toast.success(`${product.name} added to cart!`);
