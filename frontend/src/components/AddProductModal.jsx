@@ -60,7 +60,7 @@ const AddProductModal = ({ isOpen, onClose }) => {
         ...values,
         id: Date.now().toString(), // local unique ID
         _id: Date.now().toString(), // match mongo ID style
-        img: imagePreview || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80',
+        image: imagePreview || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80',
         title: values.name, // for dummyjson compatibility
         price: Number(values.price),
         stock: Number(values.stock),
@@ -74,7 +74,8 @@ const AddProductModal = ({ isOpen, onClose }) => {
       try {
         await api.post('/products', {
           ...values,
-          img: imagePreview
+          image: imagePreview,
+          brand: 'Shoptiq Global'
         });
       } catch (err) {
         console.warn('Backend persistence failed, showing local only', err);
