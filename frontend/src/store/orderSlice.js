@@ -4,7 +4,7 @@ const initialState = {
   orders: [
     { 
       id: 'ORD-99021', 
-      date: 'Oct 24, 2024', 
+      date: 'Oct 24, 2026', 
       total: 12500, 
       status: 'Delivered', 
       items: 3, 
@@ -17,7 +17,7 @@ const initialState = {
     },
     { 
       id: 'ORD-88712', 
-      date: 'Oct 12, 2024', 
+      date: 'Oct 12, 2026', 
       total: 4500, 
       status: 'Processing', 
       items: 1, 
@@ -29,7 +29,7 @@ const initialState = {
     },
     { 
       id: 'ORD-77621', 
-      date: 'Sep 28, 2024', 
+      date: 'Sep 28, 2026', 
       total: 28400, 
       status: 'Shipped', 
       items: 5, 
