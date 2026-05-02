@@ -13,39 +13,7 @@
 | 🎨 **Figma Design** | Original Assets | [View on Figma](https://www.figma.com/design/XohCkUjH1tSumFDZ7uYasO/figma?node-id=28-575&t=bXAxnazAwFbD3M3e-1) |
 | 🖼️ **Figma Prototype** | Interaction Map | [Open Prototype](https://www.figma.com/proto/XohCkUjH1tSumFDZ7uYasO/figma?node-id=971-4177&p=f&viewport=52%2C1906%2C0.02&t=UHE18ySKmoTfRVlx-1&scaling=contain&content-scaling=fixed&starting-point-node-id=971%3A4177&show-proto-sidebar=1&page-id=28%3A575) |
 | 📮 **Postman Docs** | API Reference | [View Documentation](https://documenter.getpostman.com/view/50840681/2sBXqKof5Z) |
-| 🎥 **YouTube Demo** | Video Walkthrough | [Watch Presentation](https://youtube.com/your-link-here) |
-
----
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# 💎 Shoptiq — Bridging the Gaps in Modern Commerce
-
-> **"From Expectation to Reality — Seamlessly."**  
-A full-stack e-commerce platform designed to eliminate critical gaps in online shopping through intelligent systems, real-time data, and enhanced user experience.
-
----
-
-# 🔗 Live Deployment & Resources
-
-| Resource | Status | Link |
-|---|---|---|
-| 🌐 **Frontend Live** | ✅ Deployed (Vercel) | https://shoptiq.vercel.app/ |
-| ⚙️ **Backend API** | ✅ Deployed (Render) | https://shoptiq-00.onrender.com |
-| 🎨 **Figma Design** | ✅ Available | https://www.figma.com/design/XohCkUjH1tSumFDZ7uYasO/figma |
-| 📮 **Postman Docs** | ✅ Available | https://documenter.getpostman.com/view/50840681/2sBXqKof5Z |
-| 🎥 **YouTube Demo** | ⏳ Add Link | https://youtube.com/your-link-here |
+| 🎥 **YouTube Demo** | Video Walkthrough | [Watch Presentation](https://youtu.be/-E1CPUZNrhY) |
 
 ---
 
