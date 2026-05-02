@@ -1,194 +1,121 @@
-# 🛒 Shoptiq  
-### Smart Shopping, Zero Surprises
+# 💎 Shoptiq — The Future of Unified Commerce
+
+> **Shopping, Exactly How You Expect It.**  
+> A premium, full-stack enterprise e-commerce ecosystem built for dynamic pricing, visual fidelity, and collective bargaining.
 
 ---
 
-## 📌 Overview
+## 🔗 Live Deployment & Resources
 
-**Shoptiq** is a smart unified commerce platform designed to eliminate the gap between what users expect and what they actually get in e-commerce.
-
-It tackles three major issues:
-
--  Inaccurate product availability  
--  Rigid pricing systems  
--  Mismatch between product visuals and reality  
-
-👉 **Goal:**  
-Ensure what users see, pay, and expect matches what they actually receive.
+| Resource | Status | Link |
+|---|---|---|
+| 🌐 **Frontend Live** | Pending Deployment | [Deploy on Vercel](#) |
+| ⚙️ **Backend API** | Pending Deployment | [Deploy on Render](#) |
+| 🎨 **UI Design** | 3D Interactive UI | Local CSS Architecture |
 
 ---
 
-## 🧩 Problem Statement
+## ✨ Core Pillars of Shoptiq
 
-Shoppers often face inconsistency between expectation and reality due to:
+### 💬 1. Dynamic Negotiation Hub
+Unlike traditional "static price" platforms, Shoptiq allows buyers to initiate live negotiations for volume pricing. 
+- **Make an Offer**: Negotiate prices directly from the product page.
+- **Offer Management**: Manage active negotiations in the dedicated Hub.
+- **B2B Ready**: Tailored for enterprise quotes and custom orders over ₹50k.
 
-### Availability Gap
-Products appear in stock but are unavailable in reality  
+### 🤝 2. Collective Group Buy Pools
+A dedicated system for unlocking massive bulk discounts through community purchasing power.
+- **Tiered Discounts**: Reach funding milestones to unlock Tier 1, Tier 2, and Enterprise pricing.
+- **Live Pool Chat**: Discuss the product with other buyers in real-time before committing.
+- **Volume Savings**: Your card is only charged when the pool closes at the guaranteed lowest price.
 
-### Pricing Gap
-Online platforms lack negotiation or flexible pricing  
+### 🤖 3. AI Size Finder & AR Styling
+Empowering buyers to make confident purchases without the guesswork.
+- **AI Recommendation Engine**: Inputs like Height and Weight instantly calculate your tailored fit.
+- **AR Try-On**: Visualize how apparel and products fit into your lifestyle.
+- **Expectation Comparison Wall**: A community gallery comparing catalog studio images against real-world user photos.
 
-### Expectation Gap (Fashion)
-Products look different in real life compared to images  
-
----
-
-## 💡 Solution
-
-Shoptiq provides a unified platform that integrates:
-
-- 🟢 Real-time inventory visibility  
-- 💰 Smart pricing (negotiation + bulk discounts)  
-- 👗 Improved product visualization  
-
----
-
-## 🚀 Key Features
-
-### 🟢 Real-Time Inventory Visibility
-- Store-level stock tracking  
-- “Available near you” feature  
-- Low stock alerts (*Only 2 left*)  
-- Product reservation system  
+### 💳 4. Secure Cart & Global Data
+- **DummyJSON Integration**: Fully dynamic storefront powered by a live global API for endless product discovery.
+- **Smart Cart Integration**: Global Redux state management dynamically calculates bulk discounts and shipping credits.
+- **Secure Checkout**: Enterprise-tier checkout flow backed by 256-bit AES Encryption UI.
 
 ---
 
-### 💰 Smart Pricing System
-- “Make an Offer” feature  
-- AI-suggested pricing (rule-based)  
-- Bulk discounts (auto-applied)  
-- Seller-controlled pricing limits  
+## 🛠️ Technical Architecture
+
+### **Frontend**
+- **Framework**: React (Vite)
+- **Styling**: Vanilla CSS with Advanced 3D Transforms (Glassmorphism & Keyframes)
+- **State Management**: Redux Toolkit (`authSlice`, `cartSlice`)
+- **Routing**: React Router DOM (Lazy Loading & Suspense)
+- **External Data**: Axios & DummyJSON API
+
+### **Backend**
+- **Runtime**: Node.js & Express
+- **Database**: MongoDB (Mongoose ODM)
+- **Authentication**: JWT (JSON Web Tokens) with LocalStorage fallback
+- **Environment**: Dotenv for secure config management
 
 ---
 
-### 👗 Product Visualization (Simplified)
-- Real user images & reviews  
-- Expectation confidence indicator  
-- *(Future)* AI size recommendation  
+## 📂 Project Roadmap
+
+- [x] **Phase 1: UI Foundation** — Premium 3D-styled components and responsive layout.
+- [x] **Phase 2: Global API** — Hooking up DummyJSON across Dashboard, Search, and Community.
+- [x] **Phase 3: State Management** — Redux cart implementation and active negotiations.
+- [x] **Phase 4: Group Buys** — Complex tiered discounting and live chat logic.
+- [x] **Phase 5: Authentication** — Secure Buyer & Admin Roles with JWT integration.
+- [ ] **Phase 6: Deployment** — Vercel & Render Integration.
 
 ---
 
-## 🔄 User Flow
+## 🚀 Getting Started
 
-1. User searches for a product  
-2. Views real-time availability nearby  
-3. Checks product details & reviews  
-4. Options:
-   - Reserve item  
-   - Negotiate price  
-   - Buy directly  
-5. Receives product with reduced mismatch risk  
+### Prerequisites
+- Node.js (v18+)
+- MongoDB Atlas Account
 
----
+### Installation
 
-## 🏗️ Tech Stack
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/shoptiq.git
+   cd shoptiq
+   ```
 
-### Frontend
-- React (Vite)  
-- Tailwind CSS + MUI  
-- Redux Toolkit  
-- React Router  
+2. **Setup Backend**
+   ```bash
+   cd backend
+   npm install
+   # Create a .env file with PORT, MONGO_URI, and JWT_SECRET
+   npm run dev
+   ```
 
-### Backend
-- Node.js  
-- Express.js  
-
-### Database
-- MongoDB  
-
-### Additional
-- JWT Authentication  
-- Axios  
-- Cloudinary *(optional)*  
-- WebSockets *(optional)*  
+3. **Setup Frontend**
+   ```bash
+   cd ../frontend
+   npm install
+   # Create a .env file if necessary
+   npm run dev
+   ```
 
 ---
 
-## 📁 Project Structure
-/client
-/components
-/pages
-/features
-/hooks
-/services
-
-/server
-/controllers
-/models
-/routes
-/middleware
-
+## 📱 Responsive Experience
+Shoptiq is engineered for a seamless multi-device experience, ensuring the premium 3D aesthetic remains stunning across:
+- **Mobile (375px)**
+- **Tablet (768px)**
+- **Desktop (1440px+)**
 
 ---
 
-## 🔑 Core Modules
+<div align="center">
+  <img src="https://img.shields.io/badge/Made%20with-React-61DAFB?style=for-the-badge&logo=react" alt="React" />
+  <img src="https://img.shields.io/badge/Styled%20with-CSS3-1572B6?style=for-the-badge&logo=css3" alt="CSS3" />
+  <img src="https://img.shields.io/badge/Powered%20by-Node.js-339933?style=for-the-badge&logo=node.js" alt="Node.js" />
+</div>
 
-- Authentication (Login/Signup)  
-- Product Management  
-- Inventory System  
-- Reservation System  
-- Pricing/Negotiation System  
-- Reporting System  
-- Admin Dashboard  
-
----
-
-## 🎯 MVP Focus
-
-👉 **Real-Time Inventory + Reservation System**
-
-Other features are implemented at a basic/simulated level.
-
----
-
-## 📸 Screens (Add later)
-
-- Landing Page  
-- Product Listing  
-- Product Details  
-- Inventory View  
-- Dashboard  
-
----
-
-## ⚙️ Installation
-
-### 1. Clone Repository
-```bash
-git clone https://github.com/your-username/shoptiq.git
-cd shoptiq
-2. Install Dependencies
-cd client
-npm install
-
-cd ../server
-npm install
-3. Run Project
-# Backend
-npm run dev
-
-# Frontend
-npm run dev
-
----
-
-##🌱 Future Enhancements
-- AI-based size recommendation
-- AR try-on integration
-- Real-time store sync
-- Advanced pricing engine
-- Mobile app
-
-## 🎯 Unique Value
-- Reduces product returns
-- Improves customer trust
-- Enhances transparency
-- Bridges online & offline shopping
-
-## 🏁 One-Line Pitch
-
-Shoptiq ensures what users see, pay, and expect matches what they actually get.
-
-👩‍💻 Author
-
-Anisha Chhajer
+<div align="center">
+  <strong>Shoptiq Ecosystem</strong> &nbsp;·&nbsp; Build for the modern digital marketplace &nbsp;·&nbsp; 2024
+</div>
