@@ -117,5 +117,5 @@ Shoptiq is engineered for a seamless multi-device experience, ensuring the premi
 </div>
 
 <div align="center">
-  <strong>Shoptiq Ecosystem</strong> &nbsp;·&nbsp; Build for the modern digital marketplace &nbsp;·&nbsp; 2024
+  <strong>Shoptiq Ecosystem</strong> &nbsp;·&nbsp; Build for the modern digital marketplace &nbsp;·&nbsp; 2026
 </div>
