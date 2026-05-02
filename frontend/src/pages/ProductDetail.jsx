@@ -25,8 +25,8 @@ const ProductDetail = ({ onNegotiate, onNavigate }) => {
         setProduct({
           ...localMatch,
           title: localMatch.name || localMatch.title,
-          thumbnail: localMatch.img || localMatch.thumbnail,
-          images: localMatch.images || [localMatch.img || localMatch.thumbnail],
+          thumbnail: localMatch.image || localMatch.img || localMatch.thumbnail,
+          images: localMatch.images || [localMatch.image || localMatch.img || localMatch.thumbnail],
           rating: localMatch.rating || 4.5,
           discountPercentage: localMatch.discountPercentage || 0,
         });
@@ -109,7 +109,6 @@ const ProductDetail = ({ onNegotiate, onNavigate }) => {
             </div>
           </div>
 
-          </div>
         </div>
 
         {/* ── Right: Purchase Info ── */}
