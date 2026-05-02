@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const messageSchema = mongoose.Schema(
+const messageSchema = new mongoose.Schema(
   {
     productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
     buyerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -13,5 +13,6 @@ const messageSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Message = mongoose.model('Message', messageSchema);
-module.exports = Message;
+messageSchema.index({ productId: 1, buyerId: 1, createdAt: -1 });
+
+module.exports = mongoose.model('Message', messageSchema);

@@ -3,7 +3,7 @@ const Negotiation = require('../models/Negotiation');
 /**
  * Periodically checks for stale negotiations and marks them as EXPIRED.
  * Runs every 5 minutes. A negotiation is considered stale if it has been
- * in PENDING or COUNTERED status for more than 24 hours without activity.
+ * in an active status for more than 24 hours without activity.
  */
 const startNegotiationTimeoutHandler = (io) => {
   const INTERVAL_MS = 5 * 60 * 1000; // 5 minutes

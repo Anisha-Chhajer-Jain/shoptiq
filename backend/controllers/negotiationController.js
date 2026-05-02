@@ -7,9 +7,9 @@ const Message = require('../models/Message');
 const getSellerNegotiations = async (req, res, next) => {
   try {
     const negotiations = await Negotiation.find({ seller: req.user._id })
+      .populate('productId', 'name image price')
       .populate('buyer', 'name email')
-      .populate('productId', 'name price image')
-      .sort('-lastMessageAt');
+      .sort({ lastMessageAt: -1 });
     res.json(negotiations);
   } catch (error) {
     next(error);
@@ -22,32 +22,24 @@ const getSellerNegotiations = async (req, res, next) => {
 const getBuyerNegotiations = async (req, res, next) => {
   try {
     const negotiations = await Negotiation.find({ buyer: req.user._id })
+      .populate('productId', 'name image price')
       .populate('seller', 'name email')
-      .populate('productId', 'name price image')
-      .sort('-lastMessageAt');
+      .sort({ lastMessageAt: -1 });
     res.json(negotiations);
   } catch (error) {
     next(error);
   }
 };
 
-// @desc    Get chat messages for a specific negotiation
-// @route   GET /api/negotiation/:productId/messages?buyerId=xxx
+// @desc    Get messages for a specific negotiation
+// @route   GET /api/negotiation/:productId/messages
 // @access  Private
 const getNegotiationMessages = async (req, res, next) => {
   try {
-    const { productId } = req.params;
-    const { buyerId } = req.query;
-    const userId = req.user._id;
-
-    const query = { productId };
-    if (buyerId) {
-      query.buyerId = buyerId;
-    } else {
-      query.buyerId = userId;
-    }
-
-    const messages = await Message.find(query).sort('createdAt').limit(200);
+    const messages = await Message.find({
+      productId: req.params.productId,
+      buyerId: req.user._id,
+    }).sort({ createdAt: 1 });
     res.json(messages);
   } catch (error) {
     next(error);
@@ -60,19 +52,16 @@ const getNegotiationMessages = async (req, res, next) => {
 const updateNegotiationStatus = async (req, res, next) => {
   try {
     const { status, agreedPrice } = req.body;
-    const negotiation = await Negotiation.findById(req.params.id);
-
+    const negotiation = await Negotiation.findByIdAndUpdate(
+      req.params.id,
+      { $set: { status, agreedPrice, lastMessageAt: new Date() } },
+      { new: true }
+    );
     if (!negotiation) {
       res.status(404);
-      throw new Error('Negotiation not found');
+      return next(new Error('Negotiation not found'));
     }
-
-    negotiation.status = status;
-    if (agreedPrice) negotiation.agreedPrice = agreedPrice;
-    negotiation.lastMessageAt = new Date();
-
-    const updated = await negotiation.save();
-    res.json(updated);
+    res.json(negotiation);
   } catch (error) {
     next(error);
   }

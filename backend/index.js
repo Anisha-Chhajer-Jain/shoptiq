@@ -11,7 +11,7 @@ const Product = require('./models/Product');
 const Negotiation = require('./models/Negotiation');
 const { startNegotiationTimeoutHandler } = require('./utils/negotiationTimeoutHandler');
 
-
+// Route imports
 const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const negotiationRoutes = require('./routes/negotiationRoutes');
@@ -315,7 +315,7 @@ app.get('/api/ping', (req, res) => {
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
-  app.get(/.*/, (req, res) =>
+  app.get('/{*path}', (req, res) =>
     res.sendFile(path.resolve(__dirname, '..', 'frontend', 'dist', 'index.html'))
   );
 } else {
@@ -331,6 +331,13 @@ app.use(errorHandler);
 // Use server.listen instead of app.listen for Socket.io
 server.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+}).on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Port ${PORT} is already in use. Kill the process and restart.`);
+    process.exit(1);
+  } else {
+    throw err;
+  }
 });
 
 // Handle unhandled promise rejections
