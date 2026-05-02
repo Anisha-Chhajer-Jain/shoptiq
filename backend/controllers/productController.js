@@ -5,7 +5,7 @@ const Product = require('../models/Product');
 // @access  Private/Seller
 const createProduct = async (req, res, next) => {
   try {
-    const { name, price, stock, category, description } = req.body;
+    const { name, price, stock, category, description, image, brand, rating } = req.body;
     
     const product = new Product({
       name,
@@ -13,6 +13,9 @@ const createProduct = async (req, res, next) => {
       stock,
       category,
       description,
+      image,
+      brand,
+      rating: rating || 4.5,
       user: req.user._id,
     });
 
