@@ -35,7 +35,7 @@ This results in missed opportunities for both buyers and sellers.
 ### 👁️ 3. Expectation Gap  
 The **digital representation of products** (images/videos) often does not match the **real-world experience**, leading to dissatisfaction and returns.
 
----
+--- 
 
 ## ⚠️ Combined Impact
 
