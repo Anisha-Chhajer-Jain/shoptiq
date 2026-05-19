@@ -54,7 +54,9 @@ api.interceptors.response.use(
       return api(config);
     }
 
-    if (error.response?.status === 401) {
+    const isAuthEndpoint = config?.url?.includes('/auth/login') || config?.url?.includes('/auth/register') || config?.url?.includes('/auth/google');
+    
+    if (error.response?.status === 401 && !isAuthEndpoint) {
       // Handle unauthorized (logout)
       localStorage.removeItem('shoptiq_token');
       window.location.href = '/login';

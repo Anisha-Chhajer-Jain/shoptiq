@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SEO } from '../components/SEO';
 import './LandingPage.css';
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -32,12 +34,25 @@ const LandingPage = () => {
           </nav>
 
           <div className="nav-actions desktop-only">
-            <button className="btn-link" onClick={() => navigate('/login')}>
-              Login
-            </button>
-            <button className="btn-primary" onClick={() => navigate('/signup')}>
-              Sign Up
-            </button>
+            {isAuthenticated ? (
+              <>
+                <button className="btn-link" onClick={() => navigate('/login')}>
+                  Switch Account
+                </button>
+                <button className="btn-primary" onClick={() => navigate('/dashboard')}>
+                  Go to Dashboard
+                </button>
+              </>
+            ) : (
+              <>
+                <button className="btn-link" onClick={() => navigate('/login')}>
+                  Login
+                </button>
+                <button className="btn-primary" onClick={() => navigate('/signup')}>
+                  Sign Up
+                </button>
+              </>
+            )}
           </div>
 
           <button 
@@ -92,12 +107,20 @@ const LandingPage = () => {
                   ))}
                 </nav>
                 <div className="mobile-nav-actions">
-                  <button className="btn-secondary" onClick={() => navigate('/login')}>
-                    Login
-                  </button>
-                  <button className="btn-primary" onClick={() => navigate('/signup')}>
-                    Sign Up
-                  </button>
+                  {isAuthenticated ? (
+                    <button className="btn-primary" onClick={() => navigate('/dashboard')}>
+                      Dashboard
+                    </button>
+                  ) : (
+                    <>
+                      <button className="btn-secondary" onClick={() => navigate('/login')}>
+                        Login
+                      </button>
+                      <button className="btn-primary" onClick={() => navigate('/signup')}>
+                        Sign Up
+                      </button>
+                    </>
+                  )}
                 </div>
               </motion.div>
             </>

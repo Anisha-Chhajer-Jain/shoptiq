@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useMemo, useEffect, useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -48,6 +48,9 @@ function App() {
   const dispatch = useDispatch();
   const [isBotOpen, setIsBotOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup' || location.pathname === '/';
 
   const muiTheme = useMemo(
     () =>
@@ -94,7 +97,7 @@ function App() {
       <CssBaseline />
       <ToastContainer position="top-right" autoClose={3000} theme={themeMode} />
       <div className="app-container">
-      {isAuthenticated && (
+      {isAuthenticated && !isAuthPage && (
         <Navbar 
           onLogout={handleLogout} 
           cartCount={cartCount} 
@@ -103,8 +106,8 @@ function App() {
         />
       )}
       
-      <div className={`app-body-layout ${isAuthenticated ? 'with-sidebar' : ''}`}>
-        {isAuthenticated && (
+      <div className={`app-body-layout ${isAuthenticated && !isAuthPage ? 'with-sidebar' : ''}`}>
+        {isAuthenticated && !isAuthPage && (
           <Sidebar 
             onLogout={handleLogout} 
             isMobileMenuOpen={isMobileMenuOpen}
@@ -116,9 +119,9 @@ function App() {
           <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* Public Routes */}
-              <Route path="/" element={!isAuthenticated ? <LandingPage /> : <Navigate to="/dashboard" />} />
-              <Route path="/login" element={!isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to="/dashboard" />} />
-              <Route path="/signup" element={!isAuthenticated ? <Signup onSignup={handleLogin} /> : <Navigate to="/dashboard" />} />
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<Login onLogin={handleLogin} />} />
+              <Route path="/signup" element={<Signup onSignup={handleLogin} />} />
               
               {/* Protected Routes */}
               {isAuthenticated ? (
@@ -141,7 +144,7 @@ function App() {
                   <Route path="*" element={<Navigate to="/dashboard" />} />
                 </>
               ) : (
-                <Route path="*" element={<Navigate to="/" />} />
+                <Route path="*" element={<Navigate to="/login" />} />
               )}
             </Routes>
           </Suspense>

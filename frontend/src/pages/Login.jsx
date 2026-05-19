@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGoogleLogin } from '@react-oauth/google';
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 import api from '../services/api';
 import './Login.css';
 
 const Login = ({ onLogin }) => {
   const [role, setRole] = useState('buyer');
+  const navigate = useNavigate();
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,6 +27,7 @@ const Login = ({ onLogin }) => {
       localStorage.setItem('shoptiq_token', data.token);
       if (onLogin) onLogin(data);
       toast.success('Logged in successfully!');
+      navigate('/dashboard');
     } catch (error) {
       toast.error(error.message || 'Authentication failed. Please check your credentials.');
     }
@@ -33,6 +43,7 @@ const Login = ({ onLogin }) => {
         localStorage.setItem('shoptiq_token', data.token);
         if (onLogin) onLogin(data);
         toast.success('Logged in with Google successfully!');
+        navigate('/dashboard');
       } catch (error) {
         toast.error('Google login failed. Please try again.');
         console.error(error);
